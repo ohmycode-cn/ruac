@@ -40,11 +40,18 @@ unset ONCE_RET # delete global variable ONCE_RET
 # Function Description: Iterate over the required executable list and verify
 #    each tool is present on the system PATH. In strict mode a missing tool
 #    triggers a fatal error; in permissive mode it issues a warning instead.
+#    The function is limited to Linux systems.
 #
 # Args:
 #    - param1: Optional mode flag; pass "ignore" to skip missing tools gracefully.
 # Returns: 0 if all tools are found, 1 if a required tool is missing in strict mode.
 function check_env_system() {
+
+    if [[ "${OSTYPE}" != "linux"* ]]; then
+        msg_error "This script is only supported on Linux systems."
+        return 1
+    fi
+
     local ignore="${1}"
 
     local exec_list=(
