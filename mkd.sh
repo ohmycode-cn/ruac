@@ -44,6 +44,10 @@ DIR_LIST=(
     "${src}/${dir_name}"
 )
 
+# Function Description: Check if the target directory already exists or if the directory name is empty.
+#
+# Args: None.
+# Returns: 0 if directory does not exist and name is valid, 1 otherwise.
 function is_exist_directory() {
     if [[ -z "${dir_name}" ]]; then
         msg_fatal "You must provide a directory name."
@@ -60,6 +64,10 @@ function is_exist_directory() {
     return 0
 }
 
+# Function Description: Create the include and source directory structure under src/cxx/.
+#
+# Args: None.
+# Returns: 0 on success, 1 if any directory creation fails.
 function create_directory() {
 
     for dir in "${DIR_LIST[@]}"; do
@@ -75,6 +83,10 @@ function create_directory() {
     return 0
 }
 
+# Function Description: Entry point that validates input and creates the project directory structure.
+#
+# Args: None.
+# Returns: 0 on success, 1 on failure.
 function main() {
     if ! is_exist_directory; then
         return 1
