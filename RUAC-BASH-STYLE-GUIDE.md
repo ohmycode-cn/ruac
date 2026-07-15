@@ -11,7 +11,7 @@
 # | Limit Line Length: Suggest wrapping in column 96 and forcing wrapping in column 120.
 # | Author: .author
 # | Date: YYYY-MM-DD HH:MM
-# | Bash: Recommended usage bash version 5.0 or higher
+# | Bash: Recommended using bash version 5.0 or higher
 # | Bash Style Guide: RUAC-BASH-STYLE-GUIDE.md
 # | Bash Style Inherited From: https://github.com/ohmycode-cn/codestyle/OMC-BASH-STYLE-GUIDE.md
 # | Description:
@@ -108,4 +108,17 @@ function main() {
     return 0
 }
 main; exit 0
+```
+
+## 6. 函数注解与风格
+
+- 函数注解风格使用 Google 风格。
+- 函数注解语言只支持英文。
+- 注解内容必须包含以下内容：
+```Bash
+# Function Description:
+#
+# Args:
+#    - param: 
+# Returns:
 ```
