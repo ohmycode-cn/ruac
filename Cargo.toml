@@ -1,0 +1,10 @@
+[package]
+name = "ruacdb"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[[bin]]
+name = "ruacdb_rust"
+path = "src/rst/main.rs"
