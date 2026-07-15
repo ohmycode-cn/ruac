@@ -35,3 +35,52 @@ if [[ ${ONCE_RET} -ne 0 ]]; then
     return 1 &>/dev/null
 fi
 unset ONCE_RET # delete global variable ONCE_RET
+
+inc="src/cxx/include"
+src="src/cxx/src"
+dir_name="${1}"
+DIR_LIST=(
+    "${inc}/${dir_name}"
+    "${src}/${dir_name}"
+)
+
+function is_exist_directory() {
+    if [[ -z "${dir_name}" ]]; then
+        msg_fatal "You must provide a directory name."
+        return 1
+    fi
+
+    for dir in "${DIR_LIST[@]}"; do
+        if [[ -d "${dir}" ]]; then
+            msg_fatal "Directory already exist you must provide a different directory name: ${dir_name}"
+            return 1
+        fi
+    done
+
+    return 0
+}
+
+function create_directory() {
+
+    for dir in "${DIR_LIST[@]}"; do
+        if ! mkdir -p "${dir}"; then
+            msg_fatal "Failed to create directory: \"${dir}\"."
+            return 1
+        fi
+    done
+
+    msg_info "Directory structure created successfully."
+    msg_info "-d include: ${inc}"
+    msg_info "-d source : ${src}"
+    return 0
+}
+
+function main() {
+    if ! is_exist_directory; then
+        return 1
+    fi
+    create_directory
+    return 0
+}
+main
+exit 0
