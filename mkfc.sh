@@ -38,8 +38,8 @@ unset ONCE_RET # delete global variable ONCE_RET
 function main() {
     local root_path
     root_path="$(pwd)"
-    local inc="${root_path}/src/cc/include"
-    local src="${root_path}/src/cc/src"
+    local inc="${root_path}/src/cxx/include"
+    local src="${root_path}/src/cxx/src"
 
     local file_name_prefix="ruac_c_"
     local file="${file_name_prefix}${2}"
@@ -101,10 +101,6 @@ function main() {
         "extern \"C\" {"
         "#endif"
         ""
-        "/*"
-        " * @brief Placeholder function declaration."
-        " */"
-        "void placeholder_function(void);"
         ""
         "#ifdef __cplusplus"
         "}"
@@ -119,12 +115,6 @@ function main() {
         ""
         "#include \"${path}/${file}.h\""
         ""
-        "/*"
-        " * @brief Placeholder function definition."
-        " */"
-        "void placeholder_function(void) {"
-        "    /* TODO: implement */"
-        "}"
     )
 
     # init header file
