@@ -1,29 +1,29 @@
 # ruac (Runtime Unified Access Controller Database)
 
-## Preface
+## 前言
 
-RUAC is a runtime unified access controller database implemented in C++, Rust, and C, with the majority of functionality written in C++. I am not certain what RUAC will become in the future, but I hope to explore a more radical database system. This means RUAC may be overhauled at certain points in time or during specific version stages.
+RUAC 是一个运行时统一访问控制数据库，使用 C++、Rust 和 C 实现，其中大部分功能使用 C++ 编写。我不确定 RUAC 未来会变成什么样子，但我希望探索一个更激进的数据库系统。这意味着 RUAC 可能在某些时间点或特定版本阶段进行重大重构。
 
-The core philosophy of RUAC is absolute modularity. Each module only needs to provide well-defined interfaces without understanding other modules' internal implementations, ensuring long-term maintainability and extensibility. I am not a professional software engineer (perhaps I will become one someday), just a free software enthusiast.
+RUAC 的核心理念是绝对的模块化。每个模块只需要提供定义良好的接口，而无需了解其他模块的内部实现，从而确保长期的可维护性和可扩展性。我不是专业的软件工程师（也许将来会成为），只是一个自由软件爱好者。
 
-If you are interested in RUAC, welcome to participate in development and discussion.
+如果你对 RUAC 感兴趣，欢迎参与开发和讨论。
 
-## Vision
+## 愿景
 
-RUAC draws inspiration from Linux philosophy, embracing principles such as "small and focused," "large and comprehensive," "modular," and "extensible."
+RUAC 的灵感来源于 Linux 哲学，秉承"小而专注"、"大而全面"、"模块化"和"可扩展"等原则。
 
-RUAC adopts a multi-language implementation: the majority of functionality is implemented in C++, memory safety-critical parts use Rust, and performance-critical parts use C. This design leverages the strengths of each language, ensuring both development efficiency and safety with optimal performance.
+RUAC 采用多语言实现：大部分功能使用 C++ 实现，内存安全关键部分使用 Rust，性能关键部分使用 C。这种设计利用了每种语言的优势，在确保开发效率和安全性的同时，实现最佳性能。
 
-Regarding language standards, RUAC will completely abandon outdated programming paradigms and language standards. The minimum C++ standard for RUAC is C++17, but the actual project uses C++26 with the compiler standard also set to C++26. For the C components, RUAC will directly adopt the C23 standard. The Rust components will use the official Rust standard library with the latest long-term support version. RUAC is a complex project and can be quite challenging!
+在语言标准方面，RUAC 将完全摒弃过时的编程范式和语言标准。RUAC 的最低 C++ 标准是 C++17，但实际项目使用 C++26，编译器标准也设置为 C++26。对于 C 组件，RUAC 将直接采用 C23 标准。Rust 组件将使用官方 Rust 标准库的最新长期支持版本。RUAC 是一个复杂的项目，可能相当具有挑战性！
 
-Like an operating system, RUAC has its own standard library, meaning third-party libraries will gradually be replaced by its own standard library. In the future, RUAC will have its own C++/C/Rust standard libraries. This requires reinventing the wheel, which is both a challenge and a learning opportunity.
+像操作系统一样，RUAC 拥有自己的标准库，这意味着第三方库将逐渐被其自身标准库取代。未来，RUAC 将拥有自己的 C++/C/Rust 标准库。这需要重新造轮子，既是挑战也是学习机会。
 
-RUAC has its own database model, kernel layer, user layer, and network layer. Similar to the Linux user system, RUAC's user layer has its own user space, with a default root user having full permissions and control over the RUAC system. In the future, RUAC will also introduce a user+group permission model.
+RUAC 拥有自己的数据库模型、内核层、用户层和网络层。类似于 Linux 用户系统，RUAC 的用户层有自己的用户空间，默认 root 用户拥有完全权限并控制 RUAC 系统。未来，RUAC 还将引入用户+组权限模型。
 
-## Standards and Guidelines
+## 标准和规范
 
-For RUAC to thrive long-term, standards and guidelines are essential. All contributors must adhere to the specifications in RUAC-CXX-STYLE-GUIDE.md. Currently, only C++ guidelines are available. Guidelines for other languages will be introduced when RUAC incorporates them in the future.
+为了让 RUAC 长期健康发展，标准和规范是必不可少的。所有贡献者必须遵守 RUAC-CXX-STYLE-GUIDE.md 中的规范。目前只有 C++ 规范，其他语言的规范将在 RUAC 引入相应语言时推出。
 
-Code submissions that do not comply with the specifications in RUAC-CXX-STYLE-GUIDE.md will be rejected.
+不符合 RUAC-CXX-STYLE-GUIDE.md 规范的代码提交将被拒绝。
 
-RUAC currently uses the GPL-3.0 open-source license on GitHub. In the future, RUAC may consider switching to the MIT license.
+RUAC 目前在 GitHub 上使用 GPL-3.0 开源许可证。未来，RUAC 可能会考虑切换到 MIT 许可证。
