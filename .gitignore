@@ -1,5 +1,10 @@
 .mimocode/
 .vscode/
+.venv/
 target/
 build/
 old_project/
+bin/*
+!bin/.gitkeep
+build_py3/*
+!build_py3/.gitkeep
