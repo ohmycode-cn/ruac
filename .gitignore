@@ -1,4 +1,5 @@
-/target
-/.mimocode
-/.author
+.mimocode/
+.vscode/
+target/
 build/
+old_project/

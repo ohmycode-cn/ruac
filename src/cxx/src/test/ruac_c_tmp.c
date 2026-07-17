@@ -14,6 +14,6 @@
 #include "test/ruac_c_tmp.h"
 #include <stdio.h>
 
-void test_hello(void) {
+void c_test_hello(void) {
     printf("This is c file test: hello\n");
 }

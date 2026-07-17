@@ -3,6 +3,6 @@
 
 int main(void) {
     std::cout << "This is c++ base test: hello" << std::endl;
-    test_hello();
+    c_test_hello();
     return 0;
 }

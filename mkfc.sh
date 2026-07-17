@@ -77,7 +77,7 @@ function main() {
 
     local publuc_init_content=(
         "/**"
-        " * C Style Guide: RUAC-C-STYLE-GUIDE.md"
+        " * C/C++ Style Guide: RUAC-CCXX-STYLE-GUIDE.md"
         " * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120"
         " * Date Time: ${n_time}"
         " * Author: ${whoami}"

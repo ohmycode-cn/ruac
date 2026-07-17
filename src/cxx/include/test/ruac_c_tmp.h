@@ -1,5 +1,5 @@
 /**
- * C Style Guide: RUAC-C-STYLE-GUIDE.md
+ * C/C++ Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120
  * Date Time: 2026-07-16 23:27:11
  * Author: ohmycode-cn(ohcode@163.com)
@@ -19,7 +19,7 @@
 extern "C" {
 #endif
 
-void test_hello(void);
+void c_test_hello(void);
 
 #ifdef __cplusplus
 }
