@@ -20,9 +20,13 @@
 namespace ruac::rstd::logsystem {
 
     /**
-     * @brief
+     * @brief Class fullname: Format Extensible Markup Language
      */
     class FormatXML : public Format {
+      private:
+        template <typename V>
+        auto convenientFormat(const logtype::smap &kmap_, const logtype::strg &key_, const V &val_) -> logtype::strg;
+
       public:
         FormatXML() = default;
         ~FormatXML() = default;

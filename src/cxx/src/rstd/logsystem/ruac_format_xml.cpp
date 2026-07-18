@@ -5,13 +5,26 @@
  * Author: ohmycode-cn(ohcode@163.com)
  * Header File : include/rstd/logsystem/ruac_format_xml.hpp
  * Source File : src/rstd/logsystem/ruac_format_xml.cpp
- * 
+ *
  * File Function Description:
- * 
- * 
+ *
+ *
  */
 
 #include "rstd/logsystem/ruac_format_xml.hpp"
+#include "rstd/logsystem/ruac_logkeys.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
+#include <sstream>
 
 namespace ruac::rstd::logsystem {
+    auto FormatXML::format(const logtype::smap &kmap_,
+                           const logtype::strg &time_,
+                           const logtype::strg &level_,
+                           const logtype::udll &sequence_,
+                           const logtype::strg &message_,
+                           const logtype::strg &file_,
+                           const logtype::sdit &line_) -> logtype::strg {
+        std::stringstream ss;
+        return ss.str();
+    }
 } // namespace ruac::rstd::logsystem
