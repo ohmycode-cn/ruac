@@ -33,12 +33,15 @@ namespace ruac::rstd::logsystem {
 
         namespace words {
 
-            const logtype::strg G_ENABLE_TERM_COMPATIBLE{"ENABLE_TERM_COMPATIBLE"};
-            const logtype::strg G_ENABLE_TERM_HIGHLIGHT{"ENABLE_TERM_HIGHLIGHT"};
-            const logtype::strg G_ENABLE_TERM_BOLD_FONT{"ENABLE_TERM_BOLD_FONT"};
+            const logtype::strg G_ENABLE_TERM_COMPATIBLE_MODE{"ENABLE_TERM_COMPATIBLE_MODE"};
+            const logtype::strg G_ENABLE_TERM_HIGHLIGHT_MODE{"ENABLE_TERM_HIGHLIGHT_MODE"};
+            const logtype::strg G_ENABLE_TERM_BOLD_FONT_MODE{"ENABLE_TERM_BOLD_FONT_MODE"};
+            const logtype::strg G_LOG_TERM_FORMAT_MODE{"LOG_TERM_FORMAT_MODE"};
+            const logtype::strg G_LOG_FILE_FORMAT_MODE{"LOG_FILE_FORMAT_MODE"};
             const logtype::strg G_LOG_OUTPUT_MODE{"LOG_OUTPUT_MODE"};
-            const logtype::strg G_LOG_FORMAT_MODE{"LOG_FORMAT_MODE"};
-            const logtype::strg G_MAX_USERS_LIMIT{"MAX_USERS_LIMIT"};
+            const logtype::strg G_LOG_WRITE_PATH{"LOG_WRITE_PATH"};
+            const logtype::strg G_LOG_WRITE_FILE{"LOG_WRITE_FILE"};
+            const logtype::strg G_LOG_FILE_SIZE_LIMIT{"LOG_FILE_SIZE_LIMIT"};
             const logtype::strg G_COMMENT{"#"};
             const logtype::strg G_SEMICOLON{";"};
             const logtype::strg G_EQUAL{"="};
