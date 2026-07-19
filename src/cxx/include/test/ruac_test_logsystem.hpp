@@ -23,6 +23,7 @@ namespace ruac::test {
     void testFormatText();
     void testFormatXML();
     void testOutputConsole(const std::string &thread_name_ = "");
+    void testOutputFile(const std::string &thread_name_ = "");
 } // namespace ruac::test
 
 #endif // RUAC_TEST_LOGSYSTEM_HPP

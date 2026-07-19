@@ -29,11 +29,21 @@ namespace ruac::test {
             t1.join();
         }
 
+        void testOutputFileAndThreadSafety() {
+            std::jthread t0([] { testOutputFile("thread-0"); });
+            std::jthread t1([] { testOutputFile("thread-1"); });
+            std::cout << "This is thread 0 by join\n";
+            t0.join();
+            std::cout << "This is thread 1 by join\n";
+            t1.join();
+        }
+
     } // namespace
     void testMain() {
         // foreatch(&testFormatJson);
         // foreatch(&testFormatText);
         // foreatch(&testFormatXML);
         testOutputConsoleAndThreadSafety();
+        testOutputFileAndThreadSafety();
     }
 } // namespace ruac::test

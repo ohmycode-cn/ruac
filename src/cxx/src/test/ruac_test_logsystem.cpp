@@ -18,6 +18,7 @@
 #include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logtime.hpp"
 #include "rstd/logsystem/ruac_output_console.hpp"
+#include "rstd/logsystem/ruac_output_file.hpp"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -99,6 +100,15 @@ namespace ruac::test {
         std::string green{"\033[1;32m"};
         std::string reset{"\033[0m"};
         std::cout << "[" << green << "OK" << reset << "] This is thread " << thread_name_ << " running done !\n";
+    }
+
+    void testOutputFile(const std::string &thread_name_) {
+        std::string fpath{"/home/repox/Engineering/ruacdbv01/ruacdb/tmp"};
+        std::string fname{"test.log.txt"};
+        auto obj = ruac::rstd::logsystem::OutputFile(fpath, fname, false);
+        int thread_id{};
+        ("thread-1" == thread_name_) ? thread_id = 1 : thread_id = 0;
+        innerForeatch(obj, getFormatTextString, thread_id);
     }
 
 } // namespace ruac::test
