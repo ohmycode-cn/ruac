@@ -15,11 +15,14 @@
 #ifndef RUAC_TEST_LOGSYSTEM_HPP
 #define RUAC_TEST_LOGSYSTEM_HPP
 
+#include <string>
+
 namespace ruac::test {
-    void foreatch(void (*func)());
+    void foreatch(void (*func_)());
     void testFormatJson();
     void testFormatText();
     void testFormatXML();
+    void testOutputConsole(const std::string &thread_name_ = "");
 } // namespace ruac::test
 
 #endif // RUAC_TEST_LOGSYSTEM_HPP

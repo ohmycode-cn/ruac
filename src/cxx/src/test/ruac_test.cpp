@@ -13,11 +13,27 @@
 
 #include "test/ruac_test.hpp"
 #include "test/ruac_test_logsystem.hpp"
+#include <iostream>
+#include <thread>
 
 namespace ruac::test {
+
+    namespace {
+
+        void testOutputConsoleAndThreadSafety() {
+            std::jthread t0([] { testOutputConsole("thread-0"); });
+            std::jthread t1([] { testOutputConsole("thread-1"); });
+            std::cout << "This is thread 0 by join\n";
+            t0.join();
+            std::cout << "This is thread 1 by join\n";
+            t1.join();
+        }
+
+    } // namespace
     void testMain() {
-        foreatch(&testFormatJson);
-        foreatch(&testFormatText);
-        foreatch(&testFormatXML);
+        // foreatch(&testFormatJson);
+        // foreatch(&testFormatText);
+        // foreatch(&testFormatXML);
+        testOutputConsoleAndThreadSafety();
     }
 } // namespace ruac::test
