@@ -16,7 +16,10 @@
 #define RUAC_TEST_LOGSYSTEM_HPP
 
 namespace ruac::test {
+    void foreatch(void (*func)());
     void testFormatJson();
+    void testFormatText();
+    void testFormatXML();
 } // namespace ruac::test
 
 #endif // RUAC_TEST_LOGSYSTEM_HPP

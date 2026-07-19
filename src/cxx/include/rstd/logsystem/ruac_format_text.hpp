@@ -7,7 +7,11 @@
  * Source File : src/rstd/logsystem/ruac_format_text.cpp
  *
  * File Function Description:
- *
+ *   Declares the FormatText class, a concrete implementation of the Format
+ *   interface for the RUAC log system. FormatText serializes log entries into
+ *   plain-text line pairs, where the first line contains the timestamp, level,
+ *   sequence number, and source location, and the second line indents the
+ *   message content under a labeled brace tag.
  *
  */
 
@@ -20,7 +24,8 @@
 namespace ruac::rstd::logsystem {
 
     /**
-     * @brief
+     * @brief Plain-text log formatter that serializes log entries into
+     *        human-readable two-line text segments with consistent indentation.
      */
     class FormatText : public Format {
       public:

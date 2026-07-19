@@ -55,7 +55,7 @@ namespace ruac::rstd::logsystem {
      *
      * @param kmap_    Key-value map containing formatting tokens (quotes, colons, braces, etc.).
      * @param time_    Timestamp string used as the JSON object key and the TIME field value.
-     * @param level_   Log level string (e.g. "INFO", "ERROR").
+     * @param level_   Log level string (e.g. "INFO", "ERROR", ...).
      * @param sequence_  Monotonically increasing sequence number for the log entry.
      * @param message_ The log message content.
      * @param file_    Source file name where the log was emitted.
@@ -72,7 +72,7 @@ namespace ruac::rstd::logsystem {
      * <space:4><space:4>"MESSAGE":<space:1>"message_",<next_line>
      * <space:4><space:4>"FILE":<space:1>"file_",<next_line>
      * <space:4><space:4>"LINE":<space:1>line_,<next_line>
-     * <space:4>}<next_line>
+     * <space:4>},
      */
     auto FormatJson::format(const logtype::smap &kmap_,
                             const logtype::strg &time_,
@@ -109,7 +109,7 @@ namespace ruac::rstd::logsystem {
         // endof.
         ss << logkeys::maps::G_SPACE_04;
         ss << kmap_.at(logkeys::maps::G_RIGHT_BRACE);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << kmap_.at(logkeys::maps::G_COMMA);
         return ss.str();
     }
 } // namespace ruac::rstd::logsystem

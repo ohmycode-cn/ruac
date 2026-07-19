@@ -86,6 +86,18 @@ namespace ruac::rstd::logsystem {
             const logtype::strg G_LT{"lt"};                                     // <
             const logtype::strg G_SLASH{"slash"};                               // /
             const logtype::strg G_QUESTION{"question"};                         // ?
+            const logtype::strg G_DEBUG{"DEBUG"};                               // DEBUG
+            const logtype::strg G_INFO{"INFO"};                                 // INFO
+            const logtype::strg G_WARN{"WARNING"};                              // WARNING
+            const logtype::strg G_ERROR{"ERROR"};                               // ERROR
+            const logtype::strg G_FATAL{"FATAL"};                               // FATAL
+            const logtype::strg G_XML_RECORD{"xml_record"};                     // xml_record
+            const logtype::strg G_XML_TIME{"xml_time"};                         // xml_time
+            const logtype::strg G_XML_LEVEL{"xml_level"};                       // xml_level
+            const logtype::strg G_XML_MESSAGE{"xml_message"};                   // xml_message
+            const logtype::strg G_XML_SEQUENCE{"xml_sequence"};                 // xml_sequence
+            const logtype::strg G_XML_FILE{"xml_file"};                         // xml_file
+            const logtype::strg G_XML_LINE{"xml_line"};                         // xml_line
 
             const logtype::smap G_KW_MAP_TEMPLATE{
                 {G_LEFT_BRACE, "{"},
@@ -108,6 +120,18 @@ namespace ruac::rstd::logsystem {
                 {G_LT, "<"},
                 {G_SLASH, "/"},
                 {G_QUESTION, "?"},
+                {G_DEBUG, "DEBUG"},
+                {G_INFO, "INFO"},
+                {G_WARN, "WARNING"},
+                {G_ERROR, "ERROR"},
+                {G_FATAL, "FATAL"},
+                {G_XML_RECORD, "record"},
+                {G_XML_TIME, "time"},
+                {G_XML_LEVEL, "level"},
+                {G_XML_MESSAGE, "message"},
+                {G_XML_SEQUENCE, "sequence"},
+                {G_XML_FILE, "file"},
+                {G_XML_LINE, "line"},
             };
 
         } // namespace maps

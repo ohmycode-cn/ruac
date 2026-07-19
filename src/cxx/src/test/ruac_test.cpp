@@ -16,6 +16,8 @@
 
 namespace ruac::test {
     void testMain() {
-        testFormatJson();
+        foreatch(&testFormatJson);
+        foreatch(&testFormatText);
+        foreatch(&testFormatXML);
     }
 } // namespace ruac::test

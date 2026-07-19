@@ -7,7 +7,12 @@
  * Source File : src/rstd/logsystem/ruac_format_xml.cpp
  *
  * File Function Description:
- *
+ *   Declares the FormatXML class, a concrete implementation of the Format
+ *   interface for the RUAC log system. FormatXML serializes log entries into
+ *   XML element strings, where each entry is wrapped in a <record> element
+ *   containing TIME, LEVEL, SEQUENCE, MESSAGE, FILE, and LINE child elements.
+ *   A private template helper convenientFormat generates paired open/close
+ *   XML tags with consistent indentation.
  *
  */
 
@@ -20,7 +25,8 @@
 namespace ruac::rstd::logsystem {
 
     /**
-     * @brief Class fullname: Format Extensible Markup Language
+     * @brief XML log formatter that serializes log entries into structured
+     *        XML element strings with configurable tag formatting.
      */
     class FormatXML : public Format {
       private:
