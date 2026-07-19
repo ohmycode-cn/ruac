@@ -6,5 +6,6 @@ build/
 old_project/
 bin/*
 !bin/.gitkeep
+!bin/ruacdb
 build_py3/*
 !build_py3/.gitkeep
