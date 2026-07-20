@@ -17,24 +17,22 @@
 namespace ruac::rstd::logsystem {
 
     /**
-     * Constructs a Colors instance and initializes ANSI escape sequences.
+     * @brief Constructs a Colors instance and initializes ANSI escape sequences.
      *
-     * Args:
-     *   enable_ce_: Whether to enable legacy terminal-compatible mode.
-     *   enable_ht_: Whether to enable terminal highlight rendering.
-     *   enable_bf_: Whether to enable bold font output.
+     * @param enable_ce_  Whether to enable legacy terminal-compatible mode.
+     * @param enable_ht_  Whether to enable terminal highlight rendering.
+     * @param enable_bf_  Whether to enable bold font output.
      */
     Colors::Colors(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_, const logtype::boln &enable_bf_) {
         init(enable_ce_, enable_ht_, enable_bf_);
     }
 
     /**
-     * Initializes all color escape sequences based on terminal capability flags.
+     * @brief Initializes all color escape sequences based on terminal capability flags.
      *
-     * Args:
-     *   enable_ce_: Whether to enable legacy terminal-compatible mode.
-     *   enable_ht_: Whether to enable terminal highlight rendering.
-     *   enable_bf_: Whether to enable bold font output.
+     * @param enable_ce_  Whether to enable legacy terminal-compatible mode.
+     * @param enable_ht_  Whether to enable terminal highlight rendering.
+     * @param enable_bf_  Whether to enable bold font output.
      */
     void Colors::init(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_,
                       const logtype::boln &enable_bf_) {
@@ -57,12 +55,11 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Re-initializes color sequences, allowing runtime reconfiguration.
+     * @brief Re-initializes color sequences, allowing runtime reconfiguration.
      *
-     * Args:
-     *   enable_ce_: Whether to enable legacy terminal-compatible mode.
-     *   enable_ht_: Whether to enable terminal highlight rendering.
-     *   enable_bf_: Whether to enable bold font output.
+     * @param enable_ce_  Whether to enable legacy terminal-compatible mode.
+     * @param enable_ht_  Whether to enable terminal highlight rendering.
+     * @param enable_bf_  Whether to enable bold font output.
      */
     void Colors::overloadInit(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_,
                               const logtype::boln &enable_bf_) {
@@ -70,14 +67,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with dark (gray) ANSI color escape sequences.
+     * @brief Wraps a string with dark (gray) ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with dark color and reset sequences.
+     * @return The input string wrapped with dark color and reset sequences.
      */
     auto Colors::d(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {
@@ -87,14 +82,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with red ANSI color escape sequences.
+     * @brief Wraps a string with red ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with red color and reset sequences.
+     * @return The input string wrapped with red color and reset sequences.
      */
     auto Colors::r(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {
@@ -104,14 +97,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with green ANSI color escape sequences.
+     * @brief Wraps a string with green ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with green color and reset sequences.
+     * @return The input string wrapped with green color and reset sequences.
      */
     auto Colors::g(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {
@@ -121,14 +112,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with yellow ANSI color escape sequences.
+     * @brief Wraps a string with yellow ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with yellow color and reset sequences.
+     * @return The input string wrapped with yellow color and reset sequences.
      */
     auto Colors::y(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {
@@ -138,14 +127,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with blue ANSI color escape sequences.
+     * @brief Wraps a string with blue ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with blue color and reset sequences.
+     * @return The input string wrapped with blue color and reset sequences.
      */
     auto Colors::b(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {
@@ -155,14 +142,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with magenta ANSI color escape sequences.
+     * @brief Wraps a string with magenta ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with magenta color and reset sequences.
+     * @return The input string wrapped with magenta color and reset sequences.
      */
     auto Colors::m(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {
@@ -172,14 +157,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with cyan ANSI color escape sequences.
+     * @brief Wraps a string with cyan ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with cyan color and reset sequences.
+     * @return The input string wrapped with cyan color and reset sequences.
      */
     auto Colors::c(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {
@@ -189,14 +172,12 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Wraps a string with white ANSI color escape sequences.
+     * @brief Wraps a string with white ANSI color escape sequences.
      *
-     * Args:
-     *   strline_: The text content to be colorized.
-     *   enable_ht_: Whether highlight rendering is enabled.
+     * @param strline_  The text content to be colorized.
+     * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * Returns:
-     *   The input string wrapped with white color and reset sequences.
+     * @return The input string wrapped with white color and reset sequences.
      */
     auto Colors::w(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
         if (!enable_ht_ || !m_enable_term_highlight) {

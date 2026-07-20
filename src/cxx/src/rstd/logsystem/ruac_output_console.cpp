@@ -19,10 +19,9 @@
 namespace ruac::rstd::logsystem {
 
     /**
-     * Writes a log message to standard output with thread-safe synchronization.
+     * @brief Writes a log message to standard output with thread-safe synchronization.
      *
-     * Args:
-     *   message_: The formatted log message string to write.
+     * @param message_  The formatted log message string to write.
      */
     void OutputConsole::output(const logtype::strg &message_) {
         std::osyncstream(std::cout) << message_ << std::endl;

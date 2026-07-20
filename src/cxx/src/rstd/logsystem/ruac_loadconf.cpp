@@ -31,11 +31,10 @@ namespace ruac::rstd::logsystem {
     namespace {
 
         /**
-         * Outputs the contents of a stringstream to stdout.
+         * @brief Outputs the contents of a stringstream to stdout.
          *
-         * Args:
-         *   ss_: The stringstream whose contents to output.
-         *   enable_load_msg_: If false, suppresses output (default: true).
+         * @param ss_  The stringstream whose contents to output.
+         * @param enable_load_msg_  If false, suppresses output (default: true).
          */
         void outStringStream(std::stringstream &ss_, const logtype::boln &enable_load_msg_ = true) {
             if (!enable_load_msg_) {
@@ -45,16 +44,14 @@ namespace ruac::rstd::logsystem {
         }
 
         /**
-         * Loads a configuration file into a byte buffer with validation.
+         * @brief Loads a configuration file into a byte buffer with validation.
          *
-         * Args:
-         *   file_buffer_: Output vector to store the file contents.
-         *   full_path_: The full filesystem path to the configuration file.
-         *   enable_load_msg_: If false, suppresses diagnostic output.
+         * @param file_buffer_  Output vector to store the file contents.
+         * @param full_path_  The full filesystem path to the configuration file.
+         * @param enable_load_msg_  If false, suppresses diagnostic output.
          *
-         * Returns:
-         *   true if the file was successfully loaded; false otherwise with
-         *   diagnostic output to stdout (if enabled).
+         * @return true if the file was successfully loaded; false otherwise with
+         *         diagnostic output to stdout (if enabled).
          */
         auto loadFileBuffer(std::vector<std::byte> &file_buffer_, std::filesystem::path &full_path_,
                             const logtype::boln &enable_load_msg_) -> logtype::boln {
@@ -100,16 +97,14 @@ namespace ruac::rstd::logsystem {
         }
 
         /**
-         * Parses a configuration file buffer into a key-value map.
+         * @brief Parses a configuration file buffer into a key-value map.
          *
          * Skips empty lines and comment lines (starting with #).
          * Extracts key=value pairs, handling quoted values and semicolon comments.
          *
-         * Args:
-         *   file_buffer: The raw byte buffer containing the configuration file contents.
+         * @param file_buffer  The raw byte buffer containing the configuration file contents.
          *
-         * Returns:
-         *   A map of configuration key-value pairs.
+         * @return A map of configuration key-value pairs.
          */
         auto parserConfigFile(std::vector<std::byte> &file_buffer) -> logtype::smap {
             logtype::smap confmap;
@@ -154,12 +149,11 @@ namespace ruac::rstd::logsystem {
     } // namespace
 
     /**
-     * Constructs a LoadConf and initializes with the given configuration path.
+     * @brief Constructs a LoadConf and initializes with the given configuration path.
      *
-     * Args:
-     *   rfpath_: The directory path containing the configuration file.
-     *   rfname_: The configuration file name.
-     *   enable_load_msg_: If false, suppresses load diagnostic messages.
+     * @param rfpath_  The directory path containing the configuration file.
+     * @param rfname_  The configuration file name.
+     * @param enable_load_msg_  If false, suppresses load diagnostic messages.
      */
     LoadConf::LoadConf(const logtype::strg &rfpath_, const logtype::strg &rfname_,
                        const logtype::boln &enable_load_msg_) {
@@ -168,14 +162,13 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Initializes the configuration loader with path and file name.
+     * @brief Initializes the configuration loader with path and file name.
      *
      * Emits a warning and retains the default value if path or file name is
      * empty. Otherwise, overrides the default with the provided value.
      *
-     * Args:
-     *   rfpath_: The directory path containing the configuration file.
-     *   rfname_: The configuration file name.
+     * @param rfpath_  The directory path containing the configuration file.
+     * @param rfname_  The configuration file name.
      */
     void LoadConf::init(const logtype::strg &rfpath_, const logtype::strg &rfname_) {
 
@@ -199,15 +192,14 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * Loads and parses the configuration file into a key-value map.
+     * @brief Loads and parses the configuration file into a key-value map.
      *
      * Constructs the full path from the stored directory path and file name,
      * loads the file buffer, and parses it into a map of configuration
      * key-value pairs.
      *
-     * Returns:
-     *   A map of configuration key-value pairs, or an empty map if
-     *   the file cannot be loaded.
+     * @return A map of configuration key-value pairs, or an empty map if
+     *         the file cannot be loaded.
      */
     auto LoadConf::getConfigMap() -> logtype::smap {
 

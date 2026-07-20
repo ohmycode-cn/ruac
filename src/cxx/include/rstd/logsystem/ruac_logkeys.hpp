@@ -36,13 +36,16 @@ namespace ruac::rstd::logsystem {
             const logtype::strg G_ENABLE_TERM_COMPATIBLE_MODE{"ENABLE_TERM_COMPATIBLE_MODE"};
             const logtype::strg G_ENABLE_TERM_HIGHLIGHT_MODE{"ENABLE_TERM_HIGHLIGHT_MODE"};
             const logtype::strg G_ENABLE_TERM_BOLD_FONT_MODE{"ENABLE_TERM_BOLD_FONT_MODE"};
+            const logtype::strg G_ENABLE_TERM_LOG_PRINT_MODE{"ENABLE_TERM_LOG_PRINT_MODE"};
             const logtype::strg G_LOG_TERM_FORMAT_MODE{"LOG_TERM_FORMAT_MODE"};
             const logtype::strg G_LOG_FILE_FORMAT_MODE{"LOG_FILE_FORMAT_MODE"};
             const logtype::strg G_LOG_OUTPUT_MODE{"LOG_OUTPUT_MODE"};
             const logtype::strg G_LOG_WRITE_PATH{"LOG_WRITE_PATH"};
             const logtype::strg G_LOG_WRITE_FILE{"LOG_WRITE_FILE"};
             const logtype::strg G_LOG_FILE_SIZE_LIMIT{"LOG_FILE_SIZE_LIMIT"};
-            const logtype::strg G_LOG_LEVEL_FILTER{"LOG_LEVEL_FILTER"};
+            const logtype::strg G_LOG_TERM_LEVEL_FILTER{"LOG_TERM_LEVEL_FILTER"};
+            const logtype::strg G_LOG_FILE_LEVEL_FILTER{"LOG_FILE_LEVEL_FILTER"};
+            const logtype::strg G_LOG_MIN_LEVEL_FILTER{"LOG_MIN_LEVEL_FILTER"};
             const logtype::strg G_LOG_LEVEL_DEBUG{"debug"};
             const logtype::strg G_LOG_LEVEL_INFO{"info"};
             const logtype::strg G_LOG_LEVEL_WARNING{"warning"};
@@ -94,7 +97,7 @@ namespace ruac::rstd::logsystem {
             const logtype::strg G_QUESTION{"question"};                         // ?
             const logtype::strg G_DEBUG{"DEBUG"};                               // DEBUG
             const logtype::strg G_INFO{"INFO"};                                 // INFO
-            const logtype::strg G_WARN{"WARNING"};                              // WARNING
+            const logtype::strg G_WARNING{"WARNING"};                           // WARNING
             const logtype::strg G_ERROR{"ERROR"};                               // ERROR
             const logtype::strg G_FATAL{"FATAL"};                               // FATAL
             const logtype::strg G_XML_RECORD{"xml_record"};                     // xml_record
@@ -128,7 +131,7 @@ namespace ruac::rstd::logsystem {
                 {G_QUESTION, "?"},
                 {G_DEBUG, "DEBUG"},
                 {G_INFO, "INFO"},
-                {G_WARN, "WARNING"},
+                {G_WARNING, "WARNING"},
                 {G_ERROR, "ERROR"},
                 {G_FATAL, "FATAL"},
                 {G_XML_RECORD, "record"},
@@ -137,8 +140,7 @@ namespace ruac::rstd::logsystem {
                 {G_XML_MESSAGE, "message"},
                 {G_XML_SEQUENCE, "sequence"},
                 {G_XML_FILE, "file"},
-                {G_XML_LINE, "line"},
-            };
+                {G_XML_LINE, "line"}};
 
         } // namespace maps
 
