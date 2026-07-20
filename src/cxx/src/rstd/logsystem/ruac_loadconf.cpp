@@ -13,11 +13,12 @@
  *   a byte buffer, and parserConfigFile() for extracting key-value pairs
  *   from configuration content with comment and quote handling. The public
  *   LoadConf interface orchestrates these helpers to load and parse
- *   configuration files that specify log output targets, format modes,
- *   terminal rendering flags, and file writing parameters.
+ *   configuration files, falling back to platform-specific defaults from
+ *   pathconf when user-specified paths are empty.
  */
 
 #include "rstd/logsystem/ruac_loadconf.hpp"
+#include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include <ios>
 #include <iostream>
@@ -34,8 +35,12 @@ namespace ruac::rstd::logsystem {
          *
          * Args:
          *   ss_: The stringstream whose contents to output.
+         *   enable_load_msg_: If false, suppresses output (default: true).
          */
-        void outStringStream(std::stringstream &ss_) {
+        void outStringStream(std::stringstream &ss_, const logtype::boln &enable_load_msg_ = true) {
+            if (!enable_load_msg_) {
+                return;
+            }
             std::cout << ss_.str() << std::endl;
         }
 
@@ -45,43 +50,45 @@ namespace ruac::rstd::logsystem {
          * Args:
          *   file_buffer_: Output vector to store the file contents.
          *   full_path_: The full filesystem path to the configuration file.
+         *   enable_load_msg_: If false, suppresses diagnostic output.
          *
          * Returns:
          *   true if the file was successfully loaded; false otherwise with
-         *   diagnostic output to stdout.
+         *   diagnostic output to stdout (if enabled).
          */
-        auto loadFileBuffer(std::vector<std::byte> &file_buffer_, std::filesystem::path &full_path_) -> logtype::boln {
+        auto loadFileBuffer(std::vector<std::byte> &file_buffer_, std::filesystem::path &full_path_,
+                            const logtype::boln &enable_load_msg_) -> logtype::boln {
 
-            logtype::strg default_line{"             Will use default configuration"};
+            logtype::strg default_line{"               Will use default inner parameter configuration !"};
             std::stringstream ss;
 
             if (!std::filesystem::exists(full_path_)) {
-                ss << "[LOAD ERROR] Not found file: " << full_path_.string() << "\n"
+                ss << "[LOAD ERROR:(] Not found file: " << full_path_.string() << "\n"
                    << default_line;
-                outStringStream(ss);
+                outStringStream(ss, enable_load_msg_);
                 return false;
             }
 
             if (!std::filesystem::is_regular_file(full_path_)) {
-                ss << "[LOAD ERROR] Not a regular file: " << full_path_.string() << "\n"
+                ss << "[LOAD ERROR:(] Not a regular file: " << full_path_.string() << "\n"
                    << default_line;
-                outStringStream(ss);
+                outStringStream(ss, enable_load_msg_);
                 return false;
             }
 
             std::ifstream file(full_path_, std::ios::binary | std::ios::ate);
             if (!file) {
-                ss << "[LOAD ERROR] Failed to open file: " << full_path_.string() << "\n"
+                ss << "[LOAD ERROR:(] Failed to open file: " << full_path_.string() << "\n"
                    << default_line;
-                outStringStream(ss);
+                outStringStream(ss, enable_load_msg_);
                 return false;
             }
 
             const std::streamsize file_size = file.tellg();
             if (file_size <= 0) {
-                ss << "[LOAD ERROR] Configuration file is empty: " << full_path_.string() << "\n"
+                ss << "[LOAD ERROR:(] Configuration file is empty: " << full_path_.string() << "\n"
                    << default_line;
-                outStringStream(ss);
+                outStringStream(ss, enable_load_msg_);
                 return false;
             }
 
@@ -152,69 +159,61 @@ namespace ruac::rstd::logsystem {
      * Args:
      *   rfpath_: The directory path containing the configuration file.
      *   rfname_: The configuration file name.
+     *   enable_load_msg_: If false, suppresses load diagnostic messages.
      */
-    LoadConf::LoadConf(const logtype::strg &rfpath_, const logtype::strg &rfname_) {
+    LoadConf::LoadConf(const logtype::strg &rfpath_, const logtype::strg &rfname_,
+                       const logtype::boln &enable_load_msg_) {
+        m_enable_load_msg = enable_load_msg_;
         init(rfpath_, rfname_);
     }
 
     /**
      * Initializes the configuration loader with path and file name.
      *
-     * Sets internal flags if path or file name is empty, which will cause
-     * subsequent operations to fail gracefully.
+     * Emits a warning and retains the default value if path or file name is
+     * empty. Otherwise, overrides the default with the provided value.
      *
      * Args:
      *   rfpath_: The directory path containing the configuration file.
      *   rfname_: The configuration file name.
      */
     void LoadConf::init(const logtype::strg &rfpath_, const logtype::strg &rfname_) {
-        if (rfpath_.empty()) {
-            m_is_empty_rfpath = true;
-            return;
-        }
-        if (rfname_.empty()) {
-            m_is_empty_rfname = true;
-            return;
-        }
-        m_rfpath = rfpath_;
-        m_rfname = rfname_;
-    }
 
-    /**
-     * Validates the configuration path and file name.
-     *
-     * Returns:
-     *   true if both path and file name are non-empty; false otherwise with
-     *   diagnostic output to stdout.
-     */
-    auto LoadConf::ret() -> logtype::boln {
-        if (m_is_empty_rfpath || m_is_empty_rfname) {
+        if (rfpath_.empty()) {
             std::stringstream ss;
-            ss << "[LOAD ERROR] Invalid configuration path or file name: " << m_rfpath << " " << m_rfname;
-            outStringStream(ss);
-            return false;
+            ss << "[LOAD WARNING] Invalid configuration file path: " << rfpath_ << "\n"
+               << "               Use default file path: " << pathconf::G_LOG_DEFAULT_READ_FILE_PATH;
+            outStringStream(ss, m_enable_load_msg);
+        } else {
+            m_rfpath = rfpath_;
         }
-        return true;
+
+        if (rfname_.empty()) {
+            std::stringstream ss;
+            ss << "[LOAD WARNING] Invalid configuration file name: " << rfname_ << "\n"
+               << "               Use default file name: " << pathconf::G_LOG_DEFAULT_READ_FILE_NAME;
+            outStringStream(ss, m_enable_load_msg);
+        } else {
+            m_rfname = rfname_;
+        }
     }
 
     /**
      * Loads and parses the configuration file into a key-value map.
      *
-     * Constructs the full path, loads the file buffer, and parses it
-     * into a map of configuration key-value pairs.
+     * Constructs the full path from the stored directory path and file name,
+     * loads the file buffer, and parses it into a map of configuration
+     * key-value pairs.
      *
      * Returns:
      *   A map of configuration key-value pairs, or an empty map if
-     *   the path is invalid or the file cannot be loaded.
+     *   the file cannot be loaded.
      */
     auto LoadConf::getConfigMap() -> logtype::smap {
 
-        if (m_is_empty_rfpath || m_is_empty_rfname) {
-            return {};
-        }
-
         m_full_path = std::filesystem::path(m_rfpath) / m_rfname;
-        if (!loadFileBuffer(m_file_buffer, m_full_path)) {
+        if (!loadFileBuffer(m_file_buffer, m_full_path,
+                            m_enable_load_msg)) {
             return {};
         }
 

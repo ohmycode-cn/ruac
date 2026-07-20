@@ -19,11 +19,18 @@ namespace ruac::test {
 
     void testLogfileParser00() {
 
-        auto loadconf = new ruac::rstd::logsystem::LoadConf("/home/repox/Engineering/ruacdbv01/ruacdb/config",
-                                                            "ruacdb.log.conf");
-        if (!loadconf->ret()) {
-            return;
-        }
+        // std::string fpath{"/home/repox/Engineering/ruacdbv01/ruacdb/test"}; // test not exist directory
+
+        std::string fpath{"/home/repox/Engineering/ruacdbv01/ruacdb/config"};
+        std::string fname{"ruacdb.log.conf"};
+
+        auto loadconf = new ruac::rstd::logsystem::LoadConf(fpath, fname);
+
+        // test use default parameter (default file and path)
+        // auto loadconf = new ruac::rstd::logsystem::LoadConf();
+
+        // disable load message.
+        // auto loadconf = new ruac::rstd::logsystem::LoadConf("", "", false);
 
         auto confmap = loadconf->getConfigMap();
 

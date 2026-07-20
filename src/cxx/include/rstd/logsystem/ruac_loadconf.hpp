@@ -8,9 +8,10 @@
  *
  * File Function Description:
  *   Declares the LoadConf class for the RUAC log system configuration
- *   loading. Provides a skeleton interface for parsing configuration
- *   files that define log output targets, format modes, terminal
- *   rendering options, and file writing parameters.
+ *   loading. Provides an interface for parsing configuration files that
+ *   define log output targets, format modes, terminal rendering options,
+ *   and file writing parameters. Uses platform-specific default paths
+ *   from pathconf when user-specified paths are empty.
  */
 
 #pragma once
@@ -18,10 +19,10 @@
 #ifndef RUAC_LOADCONF_HPP
 #define RUAC_LOADCONF_HPP
 
-#include "rstd/logsystem/ruac_pathconf.hpp"
 #include "rstd/logsystem/ruac_nullproc.hpp"
+#include "rstd/logsystem/ruac_pathconf.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
-#include "rstd/logsystem/ruac_logkeys.hpp"
+
 #include <filesystem>
 #include <vector>
 
@@ -31,25 +32,27 @@ namespace ruac::rstd::logsystem {
      * @brief Configuration loader for the RUAC log system.
      *        Parses configuration files to initialize log output targets,
      *        format modes, terminal rendering options, and file parameters.
+     *        Falls back to platform-specific default paths when user-specified
+     *        paths are empty. Supports suppressing diagnostic output via
+     *        the enable_load_msg parameter.
      */
     class LoadConf {
       private:
+        logtype::strg m_rfpath{pathconf::G_LOG_DEFAULT_READ_FILE_PATH};
+        logtype::strg m_rfname{pathconf::G_LOG_DEFAULT_READ_FILE_NAME};
         std::filesystem::path m_full_path{nullproc::nostr()};
-        logtype::strg m_rfpath{nullproc::nostr()};
-        logtype::strg m_rfname{nullproc::nostr()};
         std::vector<std::byte> m_file_buffer;
-        logtype::boln m_is_empty_rfpath{false};
-        logtype::boln m_is_empty_rfname{false};
+        logtype::boln m_enable_load_msg{true};
 
       private:
         void init(const logtype::strg &rfpath_, const logtype::strg &rfname_);
 
       public:
-        LoadConf(const logtype::strg &rfpath_, const logtype::strg &rfname_);
+        LoadConf(const logtype::strg &rfpath_ = "", const logtype::strg &rfname_ = "",
+                 const logtype::boln &enable_load_msg_ = true);
         ~LoadConf() = default;
 
       public:
-        auto ret() -> logtype::boln;
         auto getConfigMap() -> logtype::smap;
 
     }; // class LoadConf

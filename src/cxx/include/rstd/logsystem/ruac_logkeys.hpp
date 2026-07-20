@@ -42,6 +42,12 @@ namespace ruac::rstd::logsystem {
             const logtype::strg G_LOG_WRITE_PATH{"LOG_WRITE_PATH"};
             const logtype::strg G_LOG_WRITE_FILE{"LOG_WRITE_FILE"};
             const logtype::strg G_LOG_FILE_SIZE_LIMIT{"LOG_FILE_SIZE_LIMIT"};
+            const logtype::strg G_LOG_LEVEL_FILTER{"LOG_LEVEL_FILTER"};
+            const logtype::strg G_LOG_LEVEL_DEBUG{"debug"};
+            const logtype::strg G_LOG_LEVEL_INFO{"info"};
+            const logtype::strg G_LOG_LEVEL_WARNING{"warning"};
+            const logtype::strg G_LOG_LEVEL_ERROR{"error"};
+            const logtype::strg G_LOG_LEVEL_FATAL{"fatal"};
             const logtype::strg G_COMMENT{"#"};
             const logtype::strg G_SEMICOLON{";"};
             const logtype::strg G_EQUAL{"="};

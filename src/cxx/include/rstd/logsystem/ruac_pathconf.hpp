@@ -27,11 +27,15 @@ namespace ruac::rstd::logsystem {
         /// Default log file directory path, platform-specific.
 #if defined(__linux__)
         const logtype::strg G_LOG_DEFAULT_WRITE_FILE_PATH{"/var/log/ruacdb"};
+        const logtype::strg G_LOG_DEFAULT_READ_FILE_PATH{"/etc/ruacdb"};
+
 #elif defined(__WIN32__) || defined(__WIN64__)
         const logtype::strg G_LOG_DEFAULT_WRITE_FILE_PATH{"C:\\Users\\RuacDB\\Logs"};
+        const logtype::strg G_LOG_DEFAULT_READ_FILE_PATH{"C:\\Users\\RuacDB\\Config"};
 #endif
         /// Default log file name used when no user-specified file name is provided.
         const logtype::strg G_LOG_DEFAULT_WRITE_FILE_NAME{"ruacdb.default.log.txt"};
+        const logtype::strg G_LOG_DEFAULT_READ_FILE_NAME{"ruacdb.log.conf"};
 
     } // namespace pathconf
 
