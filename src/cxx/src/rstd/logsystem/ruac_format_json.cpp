@@ -23,7 +23,7 @@ namespace ruac::rstd::logsystem {
      *
      * @tparam V   Type of the value to format (e.g. strg, udll, sdit).
      * @param kmap_  Key-value map containing formatting tokens (quotes, colons, etc.).
-     * @param key_   The JSON property name token (e.g. logkeys::maps::G_TIME).
+     * @param key_   The JSON property name token (e.g. logkeys::tokens::G_TIME).
      * @param val_   The value to be serialized into the JSON property.
      *
      * @return A formatted JSON property line as a string.
@@ -36,17 +36,17 @@ namespace ruac::rstd::logsystem {
                                       const logtype::strg &key_,
                                       const V &val_) -> logtype::strg {
         std::stringstream ss;
-        ss << logkeys::maps::G_SPACE_08;
-        ss << kmap_.at(logkeys::maps::G_QUOTE);
+        ss << logkeys::tokens::G_SPACE_08;
+        ss << kmap_.at(logkeys::tokens::G_QUOTE);
         ss << kmap_.at(key_);
-        ss << kmap_.at(logkeys::maps::G_QUOTE);
-        ss << kmap_.at(logkeys::maps::G_COLON);
-        ss << logkeys::maps::G_SPACE_01;
-        ss << kmap_.at(logkeys::maps::G_QUOTE);
+        ss << kmap_.at(logkeys::tokens::G_QUOTE);
+        ss << kmap_.at(logkeys::tokens::G_COLON);
+        ss << logkeys::tokens::G_SPACE_01;
+        ss << kmap_.at(logkeys::tokens::G_QUOTE);
         ss << val_;
-        ss << kmap_.at(logkeys::maps::G_QUOTE);
-        ss << kmap_.at(logkeys::maps::G_COMMA);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << kmap_.at(logkeys::tokens::G_QUOTE);
+        ss << kmap_.at(logkeys::tokens::G_COMMA);
+        ss << logkeys::tokens::G_NEXT_LINE;
         return ss.str();
     }
 
@@ -84,32 +84,32 @@ namespace ruac::rstd::logsystem {
         std::stringstream ss;
 
         // start.
-        ss << logkeys::maps::G_SPACE_04;
-        ss << kmap_.at(logkeys::maps::G_QUOTE);
+        ss << logkeys::tokens::G_SPACE_04;
+        ss << kmap_.at(logkeys::tokens::G_QUOTE);
         ss << time_;
-        ss << kmap_.at(logkeys::maps::G_QUOTE);
-        ss << kmap_.at(logkeys::maps::G_COLON);
-        ss << logkeys::maps::G_SPACE_01;
-        ss << kmap_.at(logkeys::maps::G_LEFT_BRACE);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << kmap_.at(logkeys::tokens::G_QUOTE);
+        ss << kmap_.at(logkeys::tokens::G_COLON);
+        ss << logkeys::tokens::G_SPACE_01;
+        ss << kmap_.at(logkeys::tokens::G_LEFT_BRACE);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
         // time.
-        ss << convenientFormat(kmap_, logkeys::maps::G_TIME, time_);
+        ss << convenientFormat(kmap_, logkeys::tokens::G_TIME, time_);
         // levels.
-        ss << convenientFormat(kmap_, logkeys::maps::G_LEVEL, level_);
+        ss << convenientFormat(kmap_, logkeys::tokens::G_LEVEL, level_);
         // sequence.
-        ss << convenientFormat(kmap_, logkeys::maps::G_SEQUENCE, sequence_);
+        ss << convenientFormat(kmap_, logkeys::tokens::G_SEQUENCE, sequence_);
         // message.
-        ss << convenientFormat(kmap_, logkeys::maps::G_MESSAGE, message_);
+        ss << convenientFormat(kmap_, logkeys::tokens::G_MESSAGE, message_);
         // file.
-        ss << convenientFormat(kmap_, logkeys::maps::G_FILE, file_);
+        ss << convenientFormat(kmap_, logkeys::tokens::G_FILE, file_);
         // line.
-        ss << convenientFormat(kmap_, logkeys::maps::G_LINE, line_);
+        ss << convenientFormat(kmap_, logkeys::tokens::G_LINE, line_);
 
         // endof.
-        ss << logkeys::maps::G_SPACE_04;
-        ss << kmap_.at(logkeys::maps::G_RIGHT_BRACE);
-        ss << kmap_.at(logkeys::maps::G_COMMA);
+        ss << logkeys::tokens::G_SPACE_04;
+        ss << kmap_.at(logkeys::tokens::G_RIGHT_BRACE);
+        ss << kmap_.at(logkeys::tokens::G_COMMA);
         return ss.str();
     }
 } // namespace ruac::rstd::logsystem

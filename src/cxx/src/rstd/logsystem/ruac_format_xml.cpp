@@ -23,7 +23,7 @@ namespace ruac::rstd::logsystem {
      *
      * @tparam V   Type of the value to format (e.g. strg, udll, sdit).
      * @param kmap_  Key-value map containing formatting tokens (angle brackets, slash, etc.).
-     * @param key_   The XML element name token (e.g. logkeys::maps::G_XML_TIME).
+     * @param key_   The XML element name token (e.g. logkeys::tokens::G_XML_TIME).
      * @param val_   The value to be placed between the open and close tags.
      *
      * @return A formatted XML element line as a string.
@@ -36,17 +36,17 @@ namespace ruac::rstd::logsystem {
                                      const logtype::strg &key_,
                                      const V &val_) -> logtype::strg {
         std::stringstream ss;
-        ss << logkeys::maps::G_SPACE_08;
-        ss << kmap_.at(logkeys::maps::G_LT);
+        ss << logkeys::tokens::G_SPACE_08;
+        ss << kmap_.at(logkeys::tokens::G_LT);
         ss << kmap_.at(key_);
-        ss << kmap_.at(logkeys::maps::G_GT);
+        ss << kmap_.at(logkeys::tokens::G_GT);
 
         ss << val_;
 
-        ss << kmap_.at(logkeys::maps::G_LT);
-        ss << kmap_.at(logkeys::maps::G_SLASH);
+        ss << kmap_.at(logkeys::tokens::G_LT);
+        ss << kmap_.at(logkeys::tokens::G_SLASH);
         ss << kmap_.at(key_);
-        ss << kmap_.at(logkeys::maps::G_GT);
+        ss << kmap_.at(logkeys::tokens::G_GT);
         return ss.str();
     }
 
@@ -83,41 +83,41 @@ namespace ruac::rstd::logsystem {
                            const logtype::sdit &line_) -> logtype::strg {
         std::stringstream ss;
 
-        ss << logkeys::maps::G_SPACE_04;
-        ss << kmap_.at(logkeys::maps::G_LT);
-        ss << kmap_.at(logkeys::maps::G_XML_RECORD);
-        ss << kmap_.at(logkeys::maps::G_GT);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << logkeys::tokens::G_SPACE_04;
+        ss << kmap_.at(logkeys::tokens::G_LT);
+        ss << kmap_.at(logkeys::tokens::G_XML_RECORD);
+        ss << kmap_.at(logkeys::tokens::G_GT);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
         // time.
-        ss << convenientFormat(kmap_, logkeys::maps::G_XML_TIME, time_);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << convenientFormat(kmap_, logkeys::tokens::G_XML_TIME, time_);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
         // level.
-        ss << convenientFormat(kmap_, logkeys::maps::G_XML_LEVEL, level_);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << convenientFormat(kmap_, logkeys::tokens::G_XML_LEVEL, level_);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
         // sequence.
-        ss << convenientFormat(kmap_, logkeys::maps::G_XML_SEQUENCE, sequence_);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << convenientFormat(kmap_, logkeys::tokens::G_XML_SEQUENCE, sequence_);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
         // message.
-        ss << convenientFormat(kmap_, logkeys::maps::G_XML_MESSAGE, message_);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << convenientFormat(kmap_, logkeys::tokens::G_XML_MESSAGE, message_);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
         // file.
-        ss << convenientFormat(kmap_, logkeys::maps::G_XML_FILE, file_);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << convenientFormat(kmap_, logkeys::tokens::G_XML_FILE, file_);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
         // line.
-        ss << convenientFormat(kmap_, logkeys::maps::G_XML_LINE, line_);
-        ss << logkeys::maps::G_NEXT_LINE;
+        ss << convenientFormat(kmap_, logkeys::tokens::G_XML_LINE, line_);
+        ss << logkeys::tokens::G_NEXT_LINE;
 
-        ss << logkeys::maps::G_SPACE_04;
-        ss << kmap_.at(logkeys::maps::G_LT);
-        ss << kmap_.at(logkeys::maps::G_SLASH);
-        ss << kmap_.at(logkeys::maps::G_XML_RECORD);
-        ss << kmap_.at(logkeys::maps::G_GT);
+        ss << logkeys::tokens::G_SPACE_04;
+        ss << kmap_.at(logkeys::tokens::G_LT);
+        ss << kmap_.at(logkeys::tokens::G_SLASH);
+        ss << kmap_.at(logkeys::tokens::G_XML_RECORD);
+        ss << kmap_.at(logkeys::tokens::G_GT);
         return ss.str();
     }
 } // namespace ruac::rstd::logsystem

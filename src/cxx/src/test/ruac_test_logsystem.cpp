@@ -17,8 +17,10 @@
 #include "rstd/logsystem/ruac_format_xml.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logtime.hpp"
+#include "rstd/logsystem/ruac_logtoken_mapper.hpp"
 #include "rstd/logsystem/ruac_output_console.hpp"
 #include "rstd/logsystem/ruac_output_file.hpp"
+#include "rstd/logsystem/ruac_logtoken_mapper.hpp"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -37,13 +39,14 @@ namespace ruac::test {
 
         auto getFormatTextString(const int thread_id_) -> std::string {
             auto obj = ruac::rstd::logsystem::FormatText();
-            auto msg = obj.format(ruac::rstd::logsystem::logkeys::maps::G_KW_MAP_TEMPLATE,
-                                  ruac::rstd::logsystem::logtime::safeTimeString26(),
-                                  ruac::rstd::logsystem::logkeys::maps::G_DEBUG,
-                                  thread_id_,
-                                  "This is text format test",
-                                  __FILE__,
-                                  __LINE__);
+            auto msg = obj.format(
+                ruac::rstd::logsystem::logtoken_mapper::tokenmapOL(),
+                ruac::rstd::logsystem::logtime::safeTimeString26(),
+                ruac::rstd::logsystem::logkeys::tokens::G_DEBUG,
+                thread_id_,
+                "This is text format test",
+                __FILE__,
+                __LINE__);
             return msg;
         }
 
@@ -58,9 +61,9 @@ namespace ruac::test {
 
     void testFormatJson() {
         auto obj = ruac::rstd::logsystem::FormatJson();
-        auto msg = obj.format(ruac::rstd::logsystem::logkeys::maps::G_KW_MAP_TEMPLATE,
+        auto msg = obj.format(ruac::rstd::logsystem::logtoken_mapper::tokenmapOL(),
                               ruac::rstd::logsystem::logtime::safeTimeString26(),
-                              ruac::rstd::logsystem::logkeys::maps::G_DEBUG,
+                              ruac::rstd::logsystem::logkeys::tokens::G_DEBUG,
                               9223372036854775807LL,
                               "This is json format test",
                               __FILE__,
@@ -70,9 +73,9 @@ namespace ruac::test {
 
     void testFormatText() {
         auto obj = ruac::rstd::logsystem::FormatText();
-        auto msg = obj.format(ruac::rstd::logsystem::logkeys::maps::G_KW_MAP_TEMPLATE,
+        auto msg = obj.format(ruac::rstd::logsystem::logtoken_mapper::tokenmapOL(),
                               ruac::rstd::logsystem::logtime::safeTimeString26(),
-                              ruac::rstd::logsystem::logkeys::maps::G_DEBUG,
+                              ruac::rstd::logsystem::logkeys::tokens::G_DEBUG,
                               123234234768324,
                               "This is text format test",
                               __FILE__,
@@ -82,9 +85,9 @@ namespace ruac::test {
 
     void testFormatXML() {
         auto obj = ruac::rstd::logsystem::FormatXML();
-        auto msg = obj.format(ruac::rstd::logsystem::logkeys::maps::G_KW_MAP_TEMPLATE,
+        auto msg = obj.format(ruac::rstd::logsystem::logtoken_mapper::tokenmapOL(),
                               ruac::rstd::logsystem::logtime::safeTimeString26(),
-                              ruac::rstd::logsystem::logkeys::maps::G_DEBUG,
+                              ruac::rstd::logsystem::logkeys::tokens::G_DEBUG,
                               123234234768324,
                               "This is xml format test",
                               __FILE__,

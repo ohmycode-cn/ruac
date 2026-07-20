@@ -45,21 +45,21 @@ namespace ruac::rstd::logsystem {
         std::stringstream ss;
 
         ss << time_;
-        ss << logkeys::maps::G_SPACE_01;
+        ss << logkeys::tokens::G_SPACE_01;
         ss << level_;
-        ss << logkeys::maps::G_SPACE_01;
+        ss << logkeys::tokens::G_SPACE_01;
         ss << sequence_;
-        ss << logkeys::maps::G_SPACE_01;
+        ss << logkeys::tokens::G_SPACE_01;
         ss << line_;
-        ss << kmap_.at(logkeys::maps::G_COLON);
+        ss << kmap_.at(logkeys::tokens::G_COLON);
         ss << file_;
-        ss << logkeys::maps::G_NEXT_LINE;
-        ss << logkeys::maps::G_SPACE_08;
-        ss << kmap_.at(logkeys::maps::G_LEFT_BRACE);
-        ss << kmap_.at(logkeys::maps::G_MESSAGE);
-        ss << kmap_.at(logkeys::maps::G_RIGHT_BRACE);
-        ss << kmap_.at(logkeys::maps::G_COLON);
-        ss << logkeys::maps::G_SPACE_01;
+        ss << logkeys::tokens::G_NEXT_LINE;
+        ss << logkeys::tokens::G_SPACE_08;
+        ss << kmap_.at(logkeys::tokens::G_LEFT_BRACE);
+        ss << kmap_.at(logkeys::tokens::G_MESSAGE);
+        ss << kmap_.at(logkeys::tokens::G_RIGHT_BRACE);
+        ss << kmap_.at(logkeys::tokens::G_COLON);
+        ss << logkeys::tokens::G_SPACE_01;
         ss << message_;
         return ss.str();
     }
