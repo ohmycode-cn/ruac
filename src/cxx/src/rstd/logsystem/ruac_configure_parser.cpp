@@ -31,6 +31,7 @@ namespace ruac::rstd::logsystem {
                 {logkeys::words::G_LOG_TERM_FORMAT_MODE, logkeys::words::G_TEXT},
                 {logkeys::words::G_LOG_FILE_FORMAT_MODE, logkeys::words::G_TEXT},
                 {logkeys::words::G_LOG_OUTPUT_MODE, logkeys::words::G_CONSOLE},
+                // This is temporary test path and file name.
                 {logkeys::words::G_LOG_WRITE_PATH, "/home/repox/Engineering/ruacdbv01/ruacdb/tmp"},
                 {logkeys::words::G_LOG_WRITE_FILE, "ruacdb.test.log"},
                 {logkeys::words::G_LOG_FILE_SIZE_LIMIT, "128MB"},
