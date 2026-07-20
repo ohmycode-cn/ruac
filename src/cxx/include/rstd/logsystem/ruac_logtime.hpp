@@ -24,6 +24,11 @@ namespace ruac::rstd::logsystem {
 
     namespace logtime {
 
+        /**
+         * @brief Produces a locale-independent timestamp string using C++26
+         *        chrono formatting facilities, suitable for embedding in
+         *        structured log records.
+         */
         auto safeTimeString26() -> logtype::strg;
 
     } // namespace logtime

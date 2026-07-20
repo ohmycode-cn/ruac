@@ -7,12 +7,9 @@
  * Source File : src/rstd/logsystem/ruac_output_file.cpp
  *
  * File Function Description:
- *   Implements the file-output sink for the RUAC log system. Provides a
- *   checkfile() validation helper in an anonymous namespace that verifies
- *   directory existence, file existence, and regular-file type before
- *   opening. Supports two initialization modes: shared static paths for
- *   single-file multi-instance logging, and per-instance paths for
- *   thread-separation scenarios.
+ *   Provides a checkfile() validation helper in an anonymous namespace
+ *   that verifies directory existence, file existence, and regular-file
+ *   type before opening.
  */
 
 #include "rstd/logsystem/ruac_output_file.hpp"

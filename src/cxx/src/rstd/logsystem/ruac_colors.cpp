@@ -7,7 +7,7 @@
  * Source File : src/rstd/logsystem/ruac_colors.cpp
  *
  * File Function Description:
- *   Implementation file for ruac_colors.hpp.
+ *
  *
  */
 

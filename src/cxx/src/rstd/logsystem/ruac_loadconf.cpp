@@ -7,14 +7,10 @@
  * Source File : src/rstd/logsystem/ruac_loadconf.cpp
  *
  * File Function Description:
- *   Implements the configuration loading logic for the RUAC log system.
  *   Provides three anonymous-namespace helpers: outStringStream() for
  *   diagnostic output, loadFileBuffer() for validated file loading into
  *   a byte buffer, and parserConfigFile() for extracting key-value pairs
- *   from configuration content with comment and quote handling. The public
- *   LoadConf interface orchestrates these helpers to load and parse
- *   configuration files, falling back to platform-specific defaults from
- *   pathconf when user-specified paths are empty.
+ *   from configuration content with comment and quote handling.
  */
 
 #include "rstd/logsystem/ruac_loadconf.hpp"

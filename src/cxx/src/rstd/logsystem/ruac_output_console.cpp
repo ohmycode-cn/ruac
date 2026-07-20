@@ -7,9 +7,8 @@
  * Source File : src/rstd/logsystem/ruac_output_console.cpp
  *
  * File Function Description:
- *   Implements the console-output sink for the RUAC log system. Provides
- *   thread-safe log message output to standard output using std::osyncstream
- *   to prevent interleaved output from concurrent threads.
+ *
+ *
  */
 
 #include "rstd/logsystem/ruac_output_console.hpp"

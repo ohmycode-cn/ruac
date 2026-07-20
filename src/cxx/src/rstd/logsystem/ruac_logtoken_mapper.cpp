@@ -7,8 +7,10 @@
  * Source File : src/rstd/logsystem/ruac_logtoken_mapper.cpp
  *
  * File Function Description:
- *
- *
+ *   Defines an anonymous-namespace collection of 29 literal token constants
+ *   (brackets, punctuation, level names, XML element names, etc.) that
+ *   serve as the actual rendered characters for the keyword-to-literal
+ *   mapping tables.
  */
 
 #include "rstd/logsystem/ruac_logtoken_mapper.hpp"
@@ -57,6 +59,11 @@ namespace ruac::rstd::logsystem {
 
         } // namespace
 
+        /**
+         * @brief Builds a keyword-to-literal mapping table for terminal
+         *        rendering, applying color wrapping to each literal token
+         *        based on the provided capability flags.
+         */
         auto tokenmapHT(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_,
                         const logtype::boln &enable_bf_) -> logtype::smap {
 
@@ -99,6 +106,10 @@ namespace ruac::rstd::logsystem {
             return map;
         }
 
+        /**
+         * @brief Builds a keyword-to-literal mapping table for online-style
+         *        rendering, mapping each token key to its plain literal.
+         */
         auto tokenmapOL() -> logtype::smap {
 
             const logtype::smap MAP{

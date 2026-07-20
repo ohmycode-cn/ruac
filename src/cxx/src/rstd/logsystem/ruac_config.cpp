@@ -3,22 +3,29 @@
  * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120
  * Date Time: 2026-07-20 17:19:01
  * Author: ohmycode-cn(ohcode@163.com)
- * Header File : include/rstd/logsystem/ruac_configure_parser.hpp
- * Source File : src/rstd/logsystem/ruac_configure_parser.cpp
+ * Header File : include/rstd/logsystem/ruac_config.hpp
+ * Source File : src/rstd/logsystem/ruac_config.cpp
  *
  * File Function Description:
- *
- *
+ *   Provides an anonymous-namespace helper retDefaultConfigureMap() that
+ *   returns a hard-coded default configuration map covering all log system
+ *   parameters as the fallback when file loading yields an empty map.
  */
 
-#include "rstd/logsystem/ruac_configure_parser.hpp"
 #include "rstd/logsystem/ruac_loadconf.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
+#include "rstd/logsystem/ruac_logstc.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_config.hpp"
 
 namespace ruac::rstd::logsystem {
 
     namespace {
 
+        /**
+         * @brief Returns a hard-coded default configuration map covering all
+         *        log system parameters.
+         */
         auto retDefaultConfigureMap() -> logtype::smap {
             return {
                 {logkeys::words::G_ENABLE_TERM_COMPATIBLE_MODE, logkeys::words::G_TRUE},
@@ -40,13 +47,34 @@ namespace ruac::rstd::logsystem {
 
     } // namespace
 
-    auto ConfigureParser::getParserMap(const logtype::strg &rfpath_, const logtype::strg &rfname_) -> logtype::smap {
+    /**
+     * @brief Loads configuration from file via LoadConf; falls back to
+     *        retDefaultConfigureMap() when the file yields an empty map.
+     */
+    auto Config::fromFileGetConfigMap(const logtype::strg &rfpath_, const logtype::strg &rfname_) -> logtype::smap {
         LoadConf lc(rfpath_, rfname_);
         auto map = lc.getConfigMap();
         if (!map.empty()) {
             return map;
         }
         return retDefaultConfigureMap();
+    }
+
+    /**
+     * @brief Resolves optional LogParamOverride values into a concrete
+     *        LogParamList, using false/text as per-field defaults.
+     */
+    auto Config::resetTermConfigMap(const LogParamOverride &ov_ops_) -> LogParamList {
+
+        LogParamList param;
+
+        param.m_enable_term_ce = ov_ops_.m_enable_term_ce.value_or(logtype::boln{false});
+        param.m_enable_term_ht = ov_ops_.m_enable_term_ht.value_or(logtype::boln{false});
+        param.m_enable_term_bf = ov_ops_.m_enable_term_bf.value_or(logtype::boln{false});
+        param.m_enable_term_ot = ov_ops_.m_enable_term_ot.value_or(logtype::boln{false});
+        param.m_format_term_sl = ov_ops_.m_format_term_sl.value_or(logtype::strg{"text"});
+
+        return param;
     }
 
 } // namespace ruac::rstd::logsystem
