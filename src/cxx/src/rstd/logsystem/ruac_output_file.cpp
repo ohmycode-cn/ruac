@@ -165,7 +165,7 @@ namespace ruac::rstd::logsystem {
         if (!m_is_openf || !m_is_check) {
             return;
         }
-        m_ofs->write(message_.c_str(), message_.size());
+        (*m_ofs) << message_ << std::endl;
     }
 
 } // namespace ruac::rstd::logsystem
