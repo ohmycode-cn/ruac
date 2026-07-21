@@ -1,9 +1,9 @@
-# RUAC Bash Style Guide
+# RUAC Bash 风格指南
 
-## 1. File Header Comment
+## 1. 文件注释头
 
-- Every Bash script file must begin with a header comment.
-- The template header comment is as follows:
+- 每个 Bash 脚本文件的开头必须包含一个注释头。
+- 模板注释头如下：
 
 ```Bash
 #!/bin/bash
@@ -19,11 +19,11 @@
 # *********************************************************************************************
 ```
 
-## 2. Global Variables and Global Read-Only Variables
+## 2. 全局变量与全局只读变量
 
-- Global variables are not recommended in Bash scripts; read-only variables should be used instead. Usage of read-only variables should also be minimized.
-- Global variables and read-only variables are named using no suffix + all uppercase letters + words separated by underscores.
-- For read-only variables, they should first be defined as global variables, then declared as read-only. When the variable value is static, it should be directly defined as a read-only variable.
+- 不建议在 Bash 脚本中使用全局变量，应当使用只读变量。同时应当减少对只读变量的使用。
+- 全局变量与只读变量使用无后缀 + 全大写字母 + 下划线分隔单词的方式命名。
+- 对于只读变量，应当先定义为全局变量，再定义为只读变量。当变量值是静态值时，应当直接定义为只读变量。
 
 ```Bash
 # Define global only read variable.
@@ -34,11 +34,11 @@ readonly VAR_NAME=value
 VAR_NAME=value
 ```
 
-## 3. Local Variables and Local Read-Only Variables
+## 3. 局部变量与局部只读变量
 
-- Local variables and local read-only variables are named using no suffix + all lowercase letters + words separated by underscores.
-- Local variables should use the `local` qualifier to avoid polluting the script scope.
-- For local read-only variables, the `local -r` qualifier should be used.
+- 局部变量与局部只读变量使用无后缀 + 全小写字母 + 下划线分隔单词的方式命名。
+- 局部变量应当使用 `local` 限定符，避免污染脚本作用域。
+- 对于局部只读变量，应当使用 `local -r` 限定符。
 
 ```Bash
 # Define local only read variable.
@@ -47,11 +47,11 @@ local -r var_name=value
 local var_name=value
 ```
 
-## 4. Functions
+## 4. 函数
 
-- Function names should use all lowercase letters + words separated by underscores.
-- Function definitions will not follow the POSIX standard.
-- Function definitions should use the `function` qualifier.
+- 函数名称应当使用全小写字母 + 下划线分隔单词的方式命名。
+- 函数定义不会遵循 POSIX 标准。
+- 函数定义应当使用 `function` 限定符。
 
 ```Bash
 # Define function.
@@ -60,10 +60,10 @@ function function_name() {
 }
 ```
 
-- When a function has only one parameter, `${1}` should be used instead of `${@}`.
-- Variable references should use the safer `${var_name}` or `"${var_name}"`, avoiding `$var_name`.
-- When the referenced variable value is a number, `${var_name}` should be used instead of `"${var_name}"`.
-- In all other cases, `"${var_name}"` should be used.
+- 当函数的参数只有一个时，应当使用 `${1}` 而不是 `${@}`。
+- 变量的引用应当使用更安全的 `${var_name}` 或者 `"${var_name}"`，避免使用 `$var_name`。
+- 当引用的变量值是数字时，应当使用 `${var_name}` 而不是 `"${var_name}"`。
+- 其余情况，应当使用 `"${var_name}"`。
 
 ```Bash
 # Define function.
@@ -73,13 +73,13 @@ function function_name() {
     local -r number=10
     local number_1=${number}
 }
-function_name "${1}" # Function call example
+function_name "${1}" # 函数调用示例
 ```
 
-## 5. Function File Sourcing and Termination
+## 5. 函数文件的引入方式与结束方式
 
-- Function files are defined in `.shared.sh` files.
-- Function files are sourced as follows: execute in a subshell, and close the subshell upon completion.
+- 函数文件被定义在 `.shared.sh` 文件中。
+- 函数文件的引入方式如下：执行时开启子shell执行，结束时关闭子shell。
 
 ```Bash
 if [[ "${0}" == "${BASH_SOURCE[0]}" ]]; then
@@ -110,11 +110,11 @@ function main() {
 main; exit 0
 ```
 
-## 6. Function Annotations and Style
+## 6. 函数注解与风格
 
-- Function annotation style follows Google style.
-- Function annotation language must be in English only.
-- Annotations must include the following:
+- 函数注解风格使用 Google 风格。
+- 函数注解语言只支持英文。
+- 注解内容必须包含以下内容：
 ```Bash
 # Function Description:
 #

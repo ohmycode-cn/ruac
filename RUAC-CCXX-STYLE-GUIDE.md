@@ -1,82 +1,82 @@
-# RUAC C/C++ 编码规范
+# RUAC C/C++ Coding Standards
 
-### `禁止在C文件中使用C++代码`
+### `Using C++ code in C files is prohibited`
 
-## 目录
+## Table of Contents
 
-- [C++ 编码规范](#c-编码规范)
-  - [C++ 前言](#c-前言)
-  - [C/C++ 注释指南](#cc-注释指南)
-  - [C++ 目录结构](#c-目录结构)
-  - [C++ 命名空间](#c-命名空间)
-  - [C++ 类 / 枚举 / 联合体 / 结构体](#c-类--枚举--联合体--结构体)
-  - [C++ 成员变量和常量](#c-成员变量和常量)
-  - [C++ 非成员变量和常量](#c-非成员变量和常量)
-  - [C++ 参数命名](#c-参数命名)
-  - [C++ 函数](#c-函数)
-  - [C++ 函数命名](#c-函数命名)
-  - [C++ 缩写名称](#c-缩写名称)
-  - [C++ 隐藏实现细节](#c-隐藏实现细节)
-- [C 编码规范](#c-编码规范)
-  - [C 前言](#c-前言-1)
-  - [C 目录结构](#c-目录结构-1)
-  - [C 注释指南](#c-注释指南)
-  - [C 模块前缀](#c-模块前缀)
-  - [C 头文件保护宏](#c-头文件保护宏)
-  - [C 包含顺序](#c-包含顺序)
-  - [C 类型定义（结构体/枚举/联合体）](#c-类型定义结构体枚举联合体)
-  - [C 成员变量和常量](#c-成员变量和常量-1)
-  - [C 非成员变量和常量](#c-非成员变量和常量-1)
-  - [C 参数命名](#c-参数命名-1)
-  - [C 函数](#c-函数-1)
-  - [C 函数命名](#c-函数命名-1)
-  - [C 缩写名称](#c-缩写名称-1)
-  - [C 隐藏实现细节](#c-隐藏实现细节-1)
-  - [C23 特性使用](#c23-特性使用)
-  - [C 内存管理](#c-内存管理)
-  - [C 错误处理](#c-错误处理)
-  - [C 预处理器](#c-预处理器)
-  - [C 格式化](#c-格式化)
-  - [C 文件组织](#c-文件组织)
+- [C++ Coding Standards](#c-coding-standards)
+  - [C++ Foreword](#c-foreword)
+  - [C/C++ Comment Guidelines](#cc-comment-guidelines)
+  - [C++ Directory Structure](#c-directory-structure)
+  - [C++ Namespaces](#c-namespaces)
+  - [C++ Classes / Enums / Unions / Structs](#c-classes--enums--unions--structs)
+  - [C++ Member Variables and Constants](#c-member-variables-and-constants)
+  - [C++ Non-Member Variables and Constants](#c-non-member-variables-and-constants)
+  - [C++ Parameter Naming](#c-parameter-naming)
+  - [C++ Functions](#c-functions)
+  - [C++ Function Naming](#c-function-naming)
+  - [C++ Abbreviated Names](#c-abbreviated-names)
+  - [C++ Hiding Implementation Details](#c-hiding-implementation-details)
+- [C Coding Standards](#c-coding-standards)
+  - [C Foreword](#c-foreword-1)
+  - [C Directory Structure](#c-directory-structure-1)
+  - [C Comment Guidelines](#c-comment-guidelines)
+  - [C Module Prefix](#c-module-prefix)
+  - [C Header File Guard Macros](#c-header-file-guard-macros)
+  - [C Include Order](#c-include-order)
+  - [C Type Definitions (Struct/Enum/Union)](#c-type-definitions-structenumunion)
+  - [C Member Variables and Constants](#c-member-variables-and-constants-1)
+  - [C Non-Member Variables and Constants](#c-non-member-variables-and-constants-1)
+  - [C Parameter Naming](#c-parameter-naming-1)
+  - [C Functions](#c-functions-1)
+  - [C Function Naming](#c-function-naming-1)
+  - [C Abbreviated Names](#c-abbreviated-names-1)
+  - [C Hiding Implementation Details](#c-hiding-implementation-details-1)
+  - [C23 Feature Usage](#c23-feature-usage)
+  - [C Memory Management](#c-memory-management)
+  - [C Error Handling](#c-error-handling)
+  - [C Preprocessor](#c-preprocessor)
+  - [C Formatting](#c-formatting)
+  - [C File Organization](#c-file-organization)
 
 ---
 
-## C++ 编码规范
+## C++ Coding Standards
 
-## C++ 前言
+## C++ Foreword
 
-- C/CXX 文件注释必须仅使用专业英语术语。
-- 注释内容必须基于当前文件中的实际声明或实现。
+- C/CXX file comments must use professional English terminology only.
+- Comment content must be based on actual declarations or implementations in the current file.
 
-## C/C++ 注释指南
+## C/C++ Comment Guidelines
 
-- 文件头注释：
-  - 当存在头文件时：文件头的“文件功能描述”部分必须包含文件的功能描述。
-  - 当存在源文件时：仅当源文件包含与头文件声明显著不同的实现时才需要注释；否则，留空注释。
-  - 正确的注释示例：
+- File header comments:
+  - When a header file exists: the "File Description" section of the file header must contain a description of the file's functionality.
+  - When a source file exists: comments are only required when the source file contains implementations significantly different from the header file declarations; otherwise, leave the comment empty.
+  - Correct comment example:
 ```cpp
 /**
  * ......
- * 文件功能描述：
- * 内容 ...
+ * File Description:
+ * Content ...
  */
 ```
-- 在头文件中：仅注释类本身；不要注释内部内容（例如，成员变量、成员函数）。
-- 在源文件中：注释类、函数、全局变量和常量。
+- In header files: only comment the class itself; do not comment internal contents (e.g., member variables, member functions).
+- In source files: comment classes, functions, global variables, and constants.
 
-- 不符合 RUAC C++ 编码规范的代码将被拒绝。
+- Code that does not comply with RUAC C++ coding standards will be rejected.
 
-## C++ 目录结构
+## C++ Directory Structure
 
-- `src/cxx/` 是 C++ 源文件和头文件的顶级目录。
-- `include/` 是头文件的根目录，位于顶级目录下。
-- `src/` 是源文件的根目录，位于顶级目录下。
+- `src/cxx/` is the top-level directory for C++ source and header files.
+- `include/` is the root directory for header files, located under the top-level directory.
+- `src/` is the root directory for source files, located under the top-level directory.
 
-## C++ 命名空间
+## C++ Namespaces
 
-- 命名空间必须全部小写。不接受驼峰命名法（例如，`namespace targetName` 或 `namespace TargetName`）。
+- Namespaces must be all lowercase. CamelCase is not accepted (e.g., `namespace targetName` or `namespace TargetName`).
 
-- 有效示例：
+- Valid examples:
 
 ```cpp
 namespace ruac::target {
@@ -88,10 +88,10 @@ namespace ruac::target_name1 {
 } // namespace ruac::target_name1
 ```
 
-- 创建新文件时，使用 `mkf.sh` 脚本处理注释内容、命名空间和类初始化。
-- 手动创建文件时，内容必须与 `mkf.sh` 的输出匹配。
-- 所有命名空间都在根 `ruac` 命名空间下（`ruac_main.cpp` 除外）。
-- 位于 `src/cxx/` 顶级目录下的文件使用命名空间 `ruac`：
+- When creating new files, use the `mkf.sh` script to handle comment content, namespace, and class initialization.
+- When manually creating files, content must match the output of `mkf.sh`.
+- All namespaces are under the root `ruac` namespace (except `ruac_main.cpp`).
+- Files located in the `src/cxx/` top-level directory use namespace `ruac`:
 
 ```cpp
 // FILE: src/cxx/include/target.hpp
@@ -101,7 +101,7 @@ namespace ruac {
 } // namespace ruac
 ```
 
-- 位于子目录下的文件使用命名空间 `ruac::dirname`：
+- Files located in subdirectories use namespace `ruac::dirname`:
 
 ```cpp
 // FILE: src/cxx/include/dirname/target.hpp
@@ -111,12 +111,12 @@ namespace ruac::dirname {
 } // namespace ruac::dirname
 ```
 
-## C++ 类 / 枚举 / 联合体 / 结构体
+## C++ Classes / Enums / Unions / Structs
 
-- 类名必须以大写字母开头。允许使用驼峰命名法。
-- 核心模块有一个例外，以保持命名一致性。
+- Class names must start with an uppercase letter. CamelCase is allowed.
+- There is one exception for core modules to maintain naming consistency.
 
-- 有效示例：
+- Valid examples:
 
 ```cpp
 class Target {
@@ -136,55 +136,55 @@ struct TargetStruct {
 };
 ```
 
-- 枚举必须使用 `enum class` 定义。不接受具有隐式类型转换的裸枚举。枚举值必须全部大写。
-- 每个命名空间应暴露不超过9个类。标准做法是每个命名空间1个类。
+- Enums must be defined using `enum class`. Bare enums with implicit type conversion are not accepted. Enum values must be all uppercase.
+- Each namespace should expose no more than 9 classes. The standard practice is 1 class per namespace.
 
-## C++ 成员变量和常量
+## C++ Member Variables and Constants
 
-- 成员变量：`m_member_name`
-- 成员常量：`M_MEMBER_NAME`
+- Member variables: `m_member_name`
+- Member constants: `M_MEMBER_NAME`
 
-## C++ 非成员变量和常量
+## C++ Non-Member Variables and Constants
 
-- 局部变量：`var_name`，全部小写，下划线分隔。
-- 全局变量：`g_var_name`，前缀 `g_`，下划线分隔（不推荐）。
-- 局部常量：`VAR_NAME`，全部大写，下划线分隔。
-- 全局常量：`G_VAR_NAME`，前缀 `G_`，下划线分隔（仅在关键场景中使用）。
+- Local variables: `var_name`, all lowercase, underscore-separated.
+- Global variables: `g_var_name`, prefix `g_`, underscore-separated (not recommended).
+- Local constants: `VAR_NAME`, all uppercase, underscore-separated.
+- Global constants: `G_VAR_NAME`, prefix `G_`, underscore-separated (use only in critical scenarios).
 
-## C++ 参数命名
+## C++ Parameter Naming
 
-- 参数名必须全部小写，下划线分隔，并以结尾下划线 `_` 结尾。示例：`param_name_`。
+- Parameter names must be all lowercase, underscore-separated, and end with a trailing underscore `_`. Example: `param_name_`.
 
-## C++ 函数
+## C++ Functions
 
-- 函数返回格式：
+- Function return format:
 
 ```cpp
-// void 使用前置返回类型
+// void uses leading return type
 void functionName() {}
 
-// 其他类型使用后置返回类型（特别是当返回类型依赖于参数时）
+// Other types use trailing return type (especially when return type depends on parameters)
 auto functionName() -> return_type {}
 ```
 
-## C++ 函数命名
+## C++ Function Naming
 
-- 函数名必须以小写字母开头。后续单词必须以大写字母开头（驼峰命名法）。
+- Function names must start with a lowercase letter. Subsequent words must start with an uppercase letter (CamelCase).
 
-- 有效示例：
+- Valid examples:
 
 ```cpp
 auto example() -> return_type {}
 auto functionName() -> return_type {}
 ```
 
-## C++ 缩写名称
+## C++ Abbreviated Names
 
-- 当名称过长时，建议使用缩写。全名应记录在文档中。
+- When names are too long, abbreviations are recommended. Full names should be documented.
 
-## C++ 隐藏实现细节
+## C++ Hiding Implementation Details
 
-- 使用匿名命名空间或 `static` 隐藏实现细节。
+- Use anonymous namespaces or `static` to hide implementation details.
 
 ```cpp
 namespace {
@@ -194,50 +194,50 @@ namespace {
 static auto functionName() -> return_type {}
 ```
 
-# C 编码规范
+# C Coding Standards
 
-## C 前言
+## C Foreword
 
-- 不符合 RUAC C 编码规范的代码将被拒绝。
-- C 代码必须针对 C23（ISO/IEC 9899:2024）编写。
-- 优先使用 C23 特性，而非传统宏和遗留模式，以提高类型安全性和可读性。
+- Code that does not comply with RUAC C coding standards will be rejected.
+- C code must be written targeting C23 (ISO/IEC 9899:2024).
+- Prefer C23 features over legacy macros and patterns for improved type safety and readability.
 
-## C 目录结构
+## C Directory Structure
 
-- `src/cxx/` 是 C/C++ 源文件和头文件的顶级目录。
-- `include/` 是头文件的根目录，位于顶级目录下。
-- `src/` 是源文件的根目录，位于顶级目录下。
-- 头文件扩展名：`.h`。源文件扩展名：`.c`。
-- 所有 C 文件必须以 `ruac_c_` 为前缀：`ruac_c_<module>.h` / `ruac_c_<module>.c`。
+- `src/cxx/` is the top-level directory for C/C++ source and header files.
+- `include/` is the root directory for header files, located under the top-level directory.
+- `src/` is the root directory for source files, located under the top-level directory.
+- Header file extension: `.h`. Source file extension: `.c`.
+- All C files must be prefixed with `ruac_c_`: `ruac_c_<module>.h` / `ruac_c_<module>.c`.
 
-## C 注释指南
+## C Comment Guidelines
 
-- 文件头的“文件功能描述”必须基于当前文件中的实际声明或实现。
-  - 对于源文件，除非存在与头文件显著不同的实现，否则“文件功能描述”部分通常不需要注释。
-- 头文件：存在时注释结构体/枚举/联合体类型；不要注释其内部成员。
-- 源文件：注释函数、全局变量和常量。
-- 注释必须使用专业英语术语。不接受其他语言以避免字符编码问题。
-- 推荐使用 Doxygen 风格注释：
+- The "File Description" in the file header must be based on actual declarations or implementations in the current file.
+  - For source files, the "File Description" section usually does not need comments unless there are implementations significantly different from the header file.
+- Header files: comment struct/enum/union types when present; do not comment their internal members.
+- Source files: comment functions, global variables, and constants.
+- Comments must use professional English terminology. Other languages are not accepted to avoid character encoding issues.
+- Doxygen-style comments are recommended:
 
 ```c
 /**
- * @brief 函数简要描述。
+ * @brief Brief description of the function.
  *
- * 需要时的详细描述。
+ * Detailed description when needed.
  *
- * @param c_param_name_ 参数描述。
- * @return 返回值描述。
+ * @param c_param_name_ Parameter description.
+ * @return Return value description.
  */
 ```
 
-## C 模块前缀
+## C Module Prefix
 
-- C 没有命名空间。使用模块前缀来隔离跨模块的标识符。
-- 模块前缀必须全部小写，下划线分隔。
-- 所有公共函数和常量必须带有模块前缀：`c_<module>_`。
-- 所有结构体类型必须带有 `C_` 前缀：`C_<Module><Name>`。
+- C has no namespaces. Use module prefixes to isolate identifiers across modules.
+- Module prefixes must be all lowercase, underscore-separated.
+- All public functions and constants must have the module prefix: `c_<module>_`.
+- All struct types must have the `C_` prefix: `C_<Module><Name>`.
 
-- 有效示例：
+- Valid examples:
 
 ```c
 // FILE: src/cxx/include/ruac_c_target.h
@@ -255,7 +255,7 @@ void c_target_destroy(C_Target *target_);
 #endif // RUAC_C_TARGET_H_
 ```
 
-- 位于 `src/cxx/` 顶级目录下的文件使用前缀 `ruac_c_`：
+- Files located in the `src/cxx/` top-level directory use prefix `ruac_c_`:
 
 ```c
 // FILE: src/cxx/include/ruac_c_target.h
@@ -263,7 +263,7 @@ void c_target_destroy(C_Target *target_);
 int c_target_func(void);
 ```
 
-- 位于子目录下的文件使用前缀 `ruac_c_<dirname>_`：
+- Files located in subdirectories use prefix `ruac_c_<dirname>_`:
 
 ```c
 // FILE: src/cxx/include/ruac_c_dirname_target.h
@@ -271,34 +271,34 @@ int c_target_func(void);
 int c_dirname_target_func(void);
 ```
 
-## C 头文件保护宏
+## C Header File Guard Macros
 
-- 所有头文件必须使用 `#define` 保护宏以防止多重包含。
-- 保护宏格式：`RUAC_C_<PATH>_<FILE>_H_`，全部大写，下划线分隔。
-- `#pragma once` 可以在 C23 中作为补充使用，但 `#define` 保护宏是强制性的。
+- All header files must use `#define` guard macros to prevent multiple inclusion.
+- Guard macro format: `RUAC_C_<PATH>_<FILE>_H_`, all uppercase, underscore-separated.
+- `#pragma once` may be used as a supplement in C23, but `#define` guard macros are mandatory.
 
-- 有效示例：
+- Valid examples:
 
 ```c
 // FILE: src/cxx/include/ruac_c_dirname_target.h
 #ifndef RUAC_C_DIRNAME_TARGET_H_
 #define RUAC_C_DIRNAME_TARGET_H_
 
-// ... 声明 ...
+// ... declarations ...
 
 #endif // RUAC_C_DIRNAME_TARGET_H_
 ```
 
-## C 包含顺序
+## C Include Order
 
-- 包含必须遵循此顺序，各组之间用空行分隔：
-  1. 对应的头文件（例如，`foo.c` 包含 `foo.h`）
-  2. C 标准库头文件（例如，`<stdio.h>`、`<stdlib.h>`、`<string.h>`）
-  3. 系统头文件（例如，`<unistd.h>`、`<sys/types.h>`）
-  4. 第三方库头文件
-  5. 项目头文件
+- Includes must follow this order, with blank lines separating each group:
+  1. Corresponding header file (e.g., `foo.c` includes `foo.h`)
+  2. C standard library headers (e.g., `<stdio.h>`, `<stdlib.h>`, `<string.h>`)
+  3. System headers (e.g., `<unistd.h>`, `<sys/types.h>`)
+  4. Third-party library headers
+  5. Project headers
 
-- 在每组内，头文件必须按字母顺序排序。
+- Within each group, headers must be sorted alphabetically.
 
 ```c
 #include "ruac_c_target.h"
@@ -313,14 +313,14 @@ int c_dirname_target_func(void);
 #include "ruac_c_other_module.h"
 ```
 
-## C 类型定义（结构体/枚举/联合体）
+## C Type Definitions (Struct/Enum/Union)
 
-- 使用 `typedef` 为结构体、枚举和联合体创建类型别名。
-- 结构体类型名必须以 `C_` 为前缀，允许使用驼峰命名法。
-- 枚举/联合体类型名必须以大写字母开头，允许使用驼峰命名法。
-- `typedef` 必须与 `struct`/`enum`/`union` 定义放在一起。
+- Use `typedef` to create type aliases for structs, enums, and unions.
+- Struct type names must be prefixed with `C_`, CamelCase is allowed.
+- Enum/union type names must start with an uppercase letter, CamelCase is allowed.
+- `typedef` must be placed together with the `struct`/`enum`/`union` definition.
 
-- 有效示例：
+- Valid examples:
 
 ```c
 typedef struct C_Target {
@@ -340,8 +340,8 @@ typedef union TargetData {
 } TargetData;
 ```
 
-- 枚举值必须全部大写，下划线分隔，并带有类型前缀以避免命名冲突。
-- 枚举应显式指定底层值类型（C23 特性）：
+- Enum values must be all uppercase, underscore-separated, with a type prefix to avoid naming conflicts.
+- Enums should explicitly specify the underlying value type (C23 feature):
 
 ```c
 typedef enum TargetType : int {
@@ -351,21 +351,21 @@ typedef enum TargetType : int {
 } TargetType;
 ```
 
-- 匿名结构体/联合体仅允许在类型定义内使用（C11+）：
+- Anonymous structs/unions are only allowed inside type definitions (C11+):
 
 ```c
 typedef struct C_Target {
     union {
         int m_int_val;
         float m_float_val;
-    }; // 匿名联合体，直接访问 m_int_val / m_float_val
+    }; // Anonymous union, direct access to m_int_val / m_float_val
 } C_Target;
 ```
 
-## C 成员变量和常量
+## C Member Variables and Constants
 
-- 成员变量：`m_member_name`，前缀 `m_`，下划线分隔。
-- 成员常量：`M_MEMBER_NAME`，前缀 `M_`，全部大写，下划线分隔。
+- Member variables: `m_member_name`, prefix `m_`, underscore-separated.
+- Member constants: `M_MEMBER_NAME`, prefix `M_`, all uppercase, underscore-separated.
 
 ```c
 typedef struct C_Target {
@@ -375,60 +375,60 @@ typedef struct C_Target {
 } C_Target;
 ```
 
-## C 非成员变量和常量
+## C Non-Member Variables and Constants
 
-- 局部变量：`c_var_name`，前缀 `c_`，全部小写，下划线分隔。
-- 局部常量：`C_VAR_NAME`，前缀 `C_`，全部大写，下划线分隔。
-- **禁止使用全局变量。**
-- 全局常量应最小化，仅在关键场景中使用，例如编译时配置值。
-- 优先使用 `constexpr` 而非 `#define` 定义常量（C23 特性）：
+- Local variables: `c_var_name`, prefix `c_`, all lowercase, underscore-separated.
+- Local constants: `C_VAR_NAME`, prefix `C_`, all uppercase, underscore-separated.
+- **Global variables are prohibited.**
+- Global constants should be minimized and used only in critical scenarios, such as compile-time configuration values.
+- Prefer `constexpr` over `#define` for defining constants (C23 feature):
 
 ```c
-// 推荐：C23 constexpr
+// Recommended: C23 constexpr
 constexpr int C_MAX_BUFFER_SIZE = 1024;
 
-// 传统（仍允许，但推荐使用 constexpr）
+// Legacy (still allowed, but constexpr is recommended)
 #define C_MAX_BUFFER_SIZE 1024
 ```
 
-## C 参数命名
+## C Parameter Naming
 
-- 参数名必须全部小写，下划线分隔，以 `c_` 为前缀，并以结尾下划线 `_` 结尾。示例：`c_param_name_`。
+- Parameter names must be all lowercase, underscore-separated, prefixed with `c_`, and end with a trailing underscore `_`. Example: `c_param_name_`.
 
 ```c
 int c_target_process(const char *c_input_, size_t c_length_, char *c_output_);
 ```
 
-## C 函数
+## C Functions
 
-- 函数必须使用原型声明。禁止使用 K&R 风格声明。
-- 返回类型和函数名必须在同一行。
+- Functions must use prototype declarations. K&R-style declarations are prohibited.
+- Return type and function name must be on the same line.
 
 ```c
-// 正确
+// Correct
 int c_target_init(void);
 void c_target_process(const char *c_data_, size_t c_len_);
 
-// 错误：K&R 风格（已弃用）
+// Wrong: K&R style (deprecated)
 int c_target_init();
 ```
 
-- `void` 参数必须显式声明：
+- `void` parameters must be explicitly declared:
 
 ```c
-// 正确
+// Correct
 int c_target_init(void);
 
-// 错误：空括号表示未指定参数，而非无参数
+// Wrong: empty parentheses mean unspecified parameters, not no parameters
 int c_target_init();
 ```
 
-## C 函数命名
+## C Function Naming
 
-- 函数名必须全部小写，下划线分隔（蛇形命名法）。
-- 函数名必须带有模块前缀：`c_<module>_<name>`。
+- Function names must be all lowercase, underscore-separated (snake_case).
+- Function names must have the module prefix: `c_<module>_<name>`.
 
-- 有效示例：
+- Valid examples:
 
 ```c
 int c_target_init(void);
@@ -436,20 +436,20 @@ void c_target_destroy(void);
 int c_target_compare(const C_Target *c_a_, const C_Target *c_b_);
 ```
 
-## C 缩写名称
+## C Abbreviated Names
 
-- 当名称过长时，建议使用缩写。全名应记录在文档中。
+- When names are too long, abbreviations are recommended. Full names should be documented.
 
 ```c
-// URI：统一资源标识符
+// URI: Uniform Resource Identifier
 int c_uri_parse(const char *c_uri_, C_Uri *c_result_);
 ```
 
-## C 隐藏实现细节
+## C Hiding Implementation Details
 
-- 使用 `static` 限制函数和局部常量仅在当前文件中可见。
-- 不要在头文件中声明非公共符号。
-- 禁止使用全局变量。要在函数之间共享状态，请通过参数传递或将其封装在结构体中。
+- Use `static` to restrict functions and local constants to the current file only.
+- Do not declare non-public symbols in header files.
+- Global variables are prohibited. To share state between functions, pass it through parameters or encapsulate it in a struct.
 
 ```c
 // c_target.c
@@ -458,25 +458,25 @@ static int c_internal_helper(void) {
 }
 ```
 
-## C23 特性使用
+## C23 Feature Usage
 
 ### nullptr
 
-- 使用 `nullptr` 代替 `NULL` 和 `0` 表示空指针（C23 特性）。
+- Use `nullptr` instead of `NULL` and `0` for null pointers (C23 feature).
 
 ```c
-// 正确
+// Correct
 char *c_ptr = nullptr;
 if (c_ptr == nullptr) { ... }
 
-// 错误：传统 NULL
+// Wrong: legacy NULL
 char *c_ptr = NULL;
 ```
 
 ### constexpr
 
-- 使用 `constexpr` 定义编译时常量（C23 特性）。
-- 局部常量使用 `C_` 前缀：
+- Use `constexpr` to define compile-time constants (C23 feature).
+- Local constants use the `C_` prefix:
 
 ```c
 constexpr size_t C_MAX_NAME_LEN = 64;
@@ -485,45 +485,45 @@ constexpr double C_PI = 3.14159265358979323846;
 
 ### typeof / auto
 
-- 使用 `typeof` 或 `auto` 简化复杂类型声明（C23 特性）。
+- Use `typeof` or `auto` to simplify complex type declarations (C23 feature).
 
 ```c
-// typeof 获取表达式的类型
+// typeof obtains the type of an expression
 int c_x = 42;
 typeof(c_x) c_y = c_x;
 
-// auto 推导类型
+// auto deduces the type
 auto c_result = c_target_compute(c_input_);
 ```
 
 ### static_assert
 
-- 使用 `static_assert` 代替编译时断言宏（C23 特性）。
+- Use `static_assert` instead of compile-time assertion macros (C23 feature).
 
 ```c
 static_assert(sizeof(int) >= 4, "int must be at least 4 bytes");
 static_assert(alignof(C_Target) <= 64, "C_Target alignment exceeds cache line");
 ```
 
-### 属性
+### Attributes
 
-- 使用 C23 标准属性代替编译器扩展：
+- Use C23 standard attributes instead of compiler extensions:
 
 ```c
-// 返回值不能忽略
+// Return value cannot be ignored
 [[nodiscard]] int c_target_init(void);
 
-// 标记未使用的参数
+// Mark unused parameter
 void c_target_callback([[maybe_unused]] void *c_ctx_);
 
-// 标记已弃用的接口
+// Mark deprecated interface
 [[deprecated("Use c_target_new() instead")]]
 int c_target_create(void);
 ```
 
-### 泛型选择（_Generic）
+### Generic Selection (_Generic)
 
-- 使用 `_Generic` 实现类型安全的泛型宏（C11+，在 C23 中增强）：
+- Use `_Generic` to implement type-safe generic macros (C11+, enhanced in C23):
 
 ```c
 #define c_print(c_val_) _Generic((c_val_), \
@@ -534,11 +534,11 @@ int c_target_create(void);
 )(c_val_)
 ```
 
-## C 内存管理
+## C Memory Management
 
-- 必须检查 `malloc`/`calloc`/`realloc` 的返回值。
-- 优先使用 `calloc` 将内存初始化为零，避免未初始化内存问题。
-- 释放立即将指针设置为 `nullptr`。
+- Return values of `malloc`/`calloc`/`realloc` must be checked.
+- Prefer `calloc` to initialize memory to zero and avoid uninitialized memory issues.
+- Set the pointer to `nullptr` immediately after freeing.
 
 ```c
 C_Target *c_target = calloc(1, sizeof(C_Target));
@@ -546,28 +546,28 @@ if (c_target == nullptr) {
     return -1;
 }
 
-// 使用完毕
+// Done using
 free(c_target);
 c_target = nullptr;
 ```
 
-- 使用 C23 `typeof` 简化类型安全的内存分配宏：
+- Use C23 `typeof` to simplify type-safe memory allocation macros:
 
 ```c
 #define RUAC_ALLOC(c_type_) ((c_type_ *)calloc(1, sizeof(c_type_)))
 #define RUAC_ALLOC_ARRAY(c_type_, c_count_) ((c_type_ *)calloc(c_count_, sizeof(c_type_)))
 ```
 
-## C 错误处理
+## C Error Handling
 
-- 函数返回 `int` 作为错误代码：`0` 表示成功，负值表示错误。
-- 输出参数通过指针传递，放在参数列表末尾。
+- Functions return `int` as error codes: `0` for success, negative values for errors.
+- Output parameters are passed via pointers and placed at the end of the parameter list.
 
 ```c
 int c_target_parse(const char *c_input_, C_Target *c_output_);
 ```
 
-- 使用 `goto` 模式进行资源清理（地道的 C 风格）：
+- Use the `goto` pattern for resource cleanup (idiomatic C style):
 
 ```c
 int c_target_process(const char *c_input_, C_Result *c_result_)
@@ -588,7 +588,7 @@ int c_target_process(const char *c_input_, C_Result *c_result_)
         goto cleanup;
     }
 
-    // ... 处理 ...
+    // ... processing ...
 
 cleanup:
     free(c_target);
@@ -597,15 +597,15 @@ cleanup:
 }
 ```
 
-## C 预处理器
+## C Preprocessor
 
-- 优先使用 C23 特性（`constexpr`、`static_assert`、`typeof`）而非宏。
-- 宏仅应在以下场景中使用：
-  - 头文件保护宏
-  - 条件编译
-  - 泛型宏（`_Generic`）
-  - 日志/调试宏
-- 宏参数必须用括号括起来。多语句宏必须使用 `do { ... } while (0)` 模式：
+- Prefer C23 features (`constexpr`, `static_assert`, `typeof`) over macros.
+- Macros should only be used in the following scenarios:
+  - Header file guard macros
+  - Conditional compilation
+  - Generic macros (`_Generic`)
+  - Logging/debugging macros
+- Macro parameters must be enclosed in parentheses. Multi-statement macros must use the `do { ... } while (0)` pattern:
 
 ```c
 #define RUAC_C_SWAP(c_a_, c_b_)  \
@@ -616,32 +616,32 @@ cleanup:
     } while (0)
 ```
 
-- 具有副作用的宏参数必须用括号括起来：
+- Macro parameters with side effects must be enclosed in parentheses:
 
 ```c
-// 正确
+// Correct
 #define RUAC_C_MAX(c_a_, c_b_) ((c_a_) > (c_b_) ? (c_a_) : (c_b_))
 
-// 错误：可能导致副作用
+// Wrong: may cause side effects
 #define RUAC_C_MAX(c_a_, c_b_) c_a_ > c_b_ ? c_a_ : c_b_
 ```
 
-## C 格式化
+## C Formatting
 
-### 缩进和空白
+### Indentation and Whitespace
 
-- 使用 2 个空格缩进。不允许使用制表符。
-- 行宽限制：80 列。
-- 指针 `*` 附加到类型名：
+- Use 2 spaces for indentation. Tabs are not allowed.
+- Line width limit: 80 columns.
+- Pointer `*` attaches to the type name:
 
 ```c
 char *c_name = nullptr;
 const C_Target *c_target = nullptr;
 ```
 
-### 大括号
+### Braces
 
-- 函数定义的大括号放在单独的行上：
+- Function definition braces are placed on separate lines:
 
 ```c
 int c_target_init(void)
@@ -650,7 +650,7 @@ int c_target_init(void)
 }
 ```
 
-- 控制语句的大括号使用 K&R 风格（左大括号在同一行）：
+- Control statement braces use K&R style (opening brace on the same line):
 
 ```c
 if (c_condition) {
@@ -675,9 +675,9 @@ switch (c_type) {
 }
 ```
 
-### 结构体/枚举定义
+### Struct/Enum Definitions
 
-- 成员缩进并对齐。大括号风格与函数定义匹配：
+- Members are indented and aligned. Brace style matches function definitions:
 
 ```c
 typedef struct C_Target {
@@ -693,31 +693,31 @@ typedef enum TargetType : int {
 } TargetType;
 ```
 
-### 空行和垂直空白
+### Blank Lines and Vertical Whitespace
 
-- 函数定义之间空一行。
-- 使用空行分隔逻辑相关的代码块。
-- 不要在函数开头或结尾添加不必要的空行。
-- 不要在行尾添加尾随空白。
+- One blank line between function definitions.
+- Use blank lines to separate logically related code blocks.
+- Do not add unnecessary blank lines at the beginning or end of functions.
+- Do not add trailing whitespace at the end of lines.
 
-## C 文件组织
+## C File Organization
 
-### 头文件（.h）
+### Header Files (.h)
 
-- 仅包含类型声明、函数原型、宏定义和 `constexpr` 常量。
-- 不包含函数实现（除非是非常短的 `static inline` 函数）。
-- `static inline` 函数不得超过 10 行：
+- Contain only type declarations, function prototypes, macro definitions, and `constexpr` constants.
+- Do not contain function implementations (except very short `static inline` functions).
+- `static inline` functions must not exceed 10 lines:
 
 ```c
-// 允许在头文件中使用的短内联函数
+// Short inline functions allowed in header files
 static inline int c_target_is_valid(const C_Target *c_target_)
 {
     return c_target_ != nullptr && c_target_->m_id > 0;
 }
 ```
 
-### 源文件（.c）
+### Source Files (.c)
 
-- 包含对应的头文件和所有依赖项。
-- 禁止使用全局变量。文件作用域的 `static` 函数仅在当前文件中可见。
-- 公共函数实现必须遵循头文件中的声明顺序。
+- Include the corresponding header file and all dependencies.
+- Global variables are prohibited. File-scope `static` functions are visible only within the current file.
+- Public function implementations must follow the declaration order in the header file.
