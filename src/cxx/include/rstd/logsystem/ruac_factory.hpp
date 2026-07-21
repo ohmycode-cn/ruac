@@ -25,14 +25,14 @@
 namespace ruac::rstd::logsystem {
 
     namespace {
-        struct Pointer {
+        struct SinkPair {
             Format *m_fmt{nullptr};
             Output *m_out{nullptr};
         };
 
-        struct AggregationOperation {
-            Pointer m_out_to_term;
-            Pointer m_out_to_file;
+        struct OutputChannels {
+            SinkPair m_term;
+            SinkPair m_file;
         };
 
     } // namespace
@@ -45,7 +45,14 @@ namespace ruac::rstd::logsystem {
      */
     class Factory {
       private:
-        AggregationOperation m_aop;
+        OutputChannels m_channels;
+        logtype::smap m_term_kmap;
+        logtype::smap m_file_kmap;
+        logenum::Level m_term_level{logenum::Level::DEBUG};
+        logenum::Level m_file_level{logenum::Level::DEBUG};
+        logenum::Level m_min_level{logenum::Level::DEBUG};
+        logtype::udll m_sequence[5]{};
+
         void init();
         void over();
 

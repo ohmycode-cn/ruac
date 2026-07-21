@@ -7,7 +7,10 @@
  * Source File : src/rstd/logsystem/ruac_colors.cpp
  *
  * File Function Description:
- *
+ *   Implements the Colors class that builds ANSI terminal color escape
+ *   sequences from compatibility, highlight, and bold-font flags. Provides
+ *   a shared wrap() helper used by single-letter color methods (d/r/g/y/
+ *   b/m/c/w) to conditionally wrap text with color and reset codes.
  *
  */
 
@@ -28,7 +31,8 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * @brief Initializes all color escape sequences based on terminal capability flags.
+     * @brief Stores the highlight flag and builds all color escape sequences
+     *        from the terminal capability flags using static constexpr constants.
      *
      * @param enable_ce_  Whether to enable legacy terminal-compatible mode.
      * @param enable_ht_  Whether to enable terminal highlight rendering.
@@ -36,12 +40,10 @@ namespace ruac::rstd::logsystem {
      */
     void Colors::init(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_,
                       const logtype::boln &enable_bf_) {
-        m_enable_term_compatible = enable_ce_;
         m_enable_term_highlight = enable_ht_;
-        m_enable_term_bold_font = enable_bf_;
 
-        logtype::strg ANSI_TERM = m_enable_term_compatible ? M_ANSI_TERM_OLD : M_ANSI_TERM_NEW;
-        logtype::strg FONT_TYPE = m_enable_term_bold_font ? M_FONT_BOLD : M_FONT_ORGD;
+        logtype::strg ANSI_TERM = enable_ce_ ? M_ANSI_TERM_OLD : M_ANSI_TERM_NEW;
+        logtype::strg FONT_TYPE = enable_bf_ ? M_FONT_BOLD : M_FONT_ORGD;
 
         m_reset = ANSI_TERM + FONT_TYPE + M_SEQ_ID[0] + M_CHAR_M;
         m_dark = ANSI_TERM + FONT_TYPE + M_SEQ_ID[1] + M_CHAR_M;
@@ -67,123 +69,60 @@ namespace ruac::rstd::logsystem {
     }
 
     /**
-     * @brief Wraps a string with dark (gray) ANSI color escape sequences.
+     * @brief Wraps a string with the given ANSI color escape sequences.
      *
+     * @param color_  The ANSI color prefix string.
      * @param strline_  The text content to be colorized.
      * @param enable_ht_  Whether highlight rendering is enabled.
      *
-     * @return The input string wrapped with dark color and reset sequences.
+     * @return The input string wrapped with color and reset sequences.
      */
+    auto Colors::wrap(const logtype::strg &color_, const logtype::strg &strline_,
+                      const logtype::boln &enable_ht_) -> logtype::strg {
+        if (!enable_ht_ || !m_enable_term_highlight) {
+            return strline_;
+        }
+        return color_ + strline_ + m_reset;
+    }
+
+    /// @brief Wraps text with dark (gray) color via wrap().
     auto Colors::d(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_dark + strline_ + m_reset;
+        return wrap(m_dark, strline_, enable_ht_);
     }
 
-    /**
-     * @brief Wraps a string with red ANSI color escape sequences.
-     *
-     * @param strline_  The text content to be colorized.
-     * @param enable_ht_  Whether highlight rendering is enabled.
-     *
-     * @return The input string wrapped with red color and reset sequences.
-     */
+    /// @brief Wraps text with red color via wrap().
     auto Colors::r(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_red + strline_ + m_reset;
+        return wrap(m_red, strline_, enable_ht_);
     }
 
-    /**
-     * @brief Wraps a string with green ANSI color escape sequences.
-     *
-     * @param strline_  The text content to be colorized.
-     * @param enable_ht_  Whether highlight rendering is enabled.
-     *
-     * @return The input string wrapped with green color and reset sequences.
-     */
+    /// @brief Wraps text with green color via wrap().
     auto Colors::g(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_green + strline_ + m_reset;
+        return wrap(m_green, strline_, enable_ht_);
     }
 
-    /**
-     * @brief Wraps a string with yellow ANSI color escape sequences.
-     *
-     * @param strline_  The text content to be colorized.
-     * @param enable_ht_  Whether highlight rendering is enabled.
-     *
-     * @return The input string wrapped with yellow color and reset sequences.
-     */
+    /// @brief Wraps text with yellow color via wrap().
     auto Colors::y(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_yellow + strline_ + m_reset;
+        return wrap(m_yellow, strline_, enable_ht_);
     }
 
-    /**
-     * @brief Wraps a string with blue ANSI color escape sequences.
-     *
-     * @param strline_  The text content to be colorized.
-     * @param enable_ht_  Whether highlight rendering is enabled.
-     *
-     * @return The input string wrapped with blue color and reset sequences.
-     */
+    /// @brief Wraps text with blue color via wrap().
     auto Colors::b(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_blue + strline_ + m_reset;
+        return wrap(m_blue, strline_, enable_ht_);
     }
 
-    /**
-     * @brief Wraps a string with magenta ANSI color escape sequences.
-     *
-     * @param strline_  The text content to be colorized.
-     * @param enable_ht_  Whether highlight rendering is enabled.
-     *
-     * @return The input string wrapped with magenta color and reset sequences.
-     */
+    /// @brief Wraps text with magenta color via wrap().
     auto Colors::m(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_magenta + strline_ + m_reset;
+        return wrap(m_magenta, strline_, enable_ht_);
     }
 
-    /**
-     * @brief Wraps a string with cyan ANSI color escape sequences.
-     *
-     * @param strline_  The text content to be colorized.
-     * @param enable_ht_  Whether highlight rendering is enabled.
-     *
-     * @return The input string wrapped with cyan color and reset sequences.
-     */
+    /// @brief Wraps text with cyan color via wrap().
     auto Colors::c(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_cyan + strline_ + m_reset;
+        return wrap(m_cyan, strline_, enable_ht_);
     }
 
-    /**
-     * @brief Wraps a string with white ANSI color escape sequences.
-     *
-     * @param strline_  The text content to be colorized.
-     * @param enable_ht_  Whether highlight rendering is enabled.
-     *
-     * @return The input string wrapped with white color and reset sequences.
-     */
+    /// @brief Wraps text with white color via wrap().
     auto Colors::w(const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg {
-        if (!enable_ht_ || !m_enable_term_highlight) {
-            return strline_;
-        }
-        return m_white + strline_ + m_reset;
+        return wrap(m_white, strline_, enable_ht_);
     }
 
 } // namespace ruac::rstd::logsystem

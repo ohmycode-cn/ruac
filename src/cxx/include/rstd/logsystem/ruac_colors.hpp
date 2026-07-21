@@ -31,20 +31,16 @@ namespace ruac::rstd::logsystem {
      */
     class Colors {
       private:
-        logtype::boln m_enable_term_compatible{true};
+        static constexpr const char *M_SEQ_ID[9]{"0", "30", "31", "32", "33", "34", "35", "36",
+                                                  "37"};
+        static constexpr const char *M_ANSI_TERM_OLD{"\033"};
+        static constexpr const char *M_ANSI_TERM_NEW{"\x1b"};
+        static constexpr const char *M_CHAR_M{"m"};
+        static constexpr const char *M_FONT_ORGD{"[0;"};
+        static constexpr const char *M_FONT_BOLD{"[1;"};
+
+      private:
         logtype::boln m_enable_term_highlight{false};
-        logtype::boln m_enable_term_bold_font{false};
-
-      private:
-        const logtype::strg M_SEQ_ID[9]{"0", "30", "31", "32", "33", "34", "35", "36",
-                                        "37"};
-        const logtype::strg M_ANSI_TERM_OLD{"\033"};
-        const logtype::strg M_ANSI_TERM_NEW{"\x1b"};
-        const logtype::strg M_CHAR_M{"m"};
-        const logtype::strg M_FONT_ORGD{"[0;"};
-        const logtype::strg M_FONT_BOLD{"[1;"};
-
-      private:
         logtype::strg m_reset;
         logtype::strg m_dark;
         logtype::strg m_red;
@@ -57,6 +53,7 @@ namespace ruac::rstd::logsystem {
 
       private:
         void init(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_, const logtype::boln &enable_bf_);
+        auto wrap(const logtype::strg &color_, const logtype::strg &strline_, const logtype::boln &enable_ht_) -> logtype::strg;
 
       public:
         Colors(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_, const logtype::boln &enable_bf_);

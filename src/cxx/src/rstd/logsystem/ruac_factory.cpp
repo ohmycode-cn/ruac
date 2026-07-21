@@ -31,13 +31,6 @@ namespace ruac::rstd::logsystem {
 
     namespace {
 
-        logtype::smap g_term_kmap;
-        logtype::smap g_file_kmap;
-        logenum::Level g_term_level{logenum::Level::DEBUG};
-        logenum::Level g_file_level{logenum::Level::DEBUG};
-        logenum::Level g_min_level{logenum::Level::DEBUG};
-        logtype::udll g_sequence[5] = {0, 0, 0, 0, 0};
-
         /**
          * @brief Parses a level string into a logenum::Level value.
          *
@@ -153,13 +146,13 @@ namespace ruac::rstd::logsystem {
         auto file_fmt = confValue(confmap_, logkeys::words::G_LOG_FILE_FORMAT_MODE,
                                   logkeys::words::G_TEXT);
 
-        g_term_level = parseLevel(
+        m_term_level = parseLevel(
             confValue(confmap_, logkeys::words::G_LOG_TERM_LEVEL_FILTER,
                       logkeys::words::G_LOG_LEVEL_DEBUG));
-        g_file_level = parseLevel(
+        m_file_level = parseLevel(
             confValue(confmap_, logkeys::words::G_LOG_FILE_LEVEL_FILTER,
                       logkeys::words::G_LOG_LEVEL_DEBUG));
-        g_min_level = parseLevel(
+        m_min_level = parseLevel(
             confValue(confmap_, logkeys::words::G_LOG_MIN_LEVEL_FILTER,
                       logkeys::words::G_LOG_LEVEL_DEBUG));
 
@@ -170,12 +163,12 @@ namespace ruac::rstd::logsystem {
         auto enable_bf = confValue(confmap_, logkeys::words::G_ENABLE_TERM_BOLD_FONT_MODE,
                                    logkeys::words::G_FALSE) == logkeys::words::G_TRUE;
 
-        g_term_kmap = logtoken_mapper::tokenmapHT(enable_ce, enable_ht, enable_bf);
-        g_file_kmap = logtoken_mapper::tokenmapOL();
+        m_term_kmap = logtoken_mapper::tokenmapHT(enable_ce, enable_ht, enable_bf);
+        m_file_kmap = logtoken_mapper::tokenmapOL();
 
         if (output_mode == logkeys::words::G_CONSOLE || output_mode == logkeys::words::G_BOTH) {
-            m_aop.m_out_to_term.m_fmt = createFormat(term_fmt);
-            m_aop.m_out_to_term.m_out = new OutputConsole();
+            m_channels.m_term.m_fmt = createFormat(term_fmt);
+            m_channels.m_term.m_out = new OutputConsole();
         }
 
         if (output_mode == logkeys::words::G_FILE || output_mode == logkeys::words::G_BOTH) {
@@ -183,11 +176,11 @@ namespace ruac::rstd::logsystem {
                                         pathconf::G_LOG_DEFAULT_WRITE_FILE_PATH);
             auto write_file = confValue(confmap_, logkeys::words::G_LOG_WRITE_FILE,
                                         pathconf::G_LOG_DEFAULT_WRITE_FILE_NAME);
-            m_aop.m_out_to_file.m_fmt = createFormat(file_fmt);
-            m_aop.m_out_to_file.m_out = new OutputFile(write_path, write_file);
+            m_channels.m_file.m_fmt = createFormat(file_fmt);
+            m_channels.m_file.m_out = new OutputFile(write_path, write_file);
         }
 
-        for (auto &s : g_sequence) s = 0;
+        for (auto &s : m_sequence) s = 0;
     }
 
     /**
@@ -203,20 +196,20 @@ namespace ruac::rstd::logsystem {
     void Factory::init() {}
 
     /**
-     * @brief Releases every raw pointer owned by m_aop and nullifies the slots.
+     * @brief Releases every raw pointer owned by m_channels and nullifies the slots.
      */
     void Factory::over() {
-        delete m_aop.m_out_to_term.m_fmt;
-        m_aop.m_out_to_term.m_fmt = nullptr;
+        delete m_channels.m_term.m_fmt;
+        m_channels.m_term.m_fmt = nullptr;
 
-        delete m_aop.m_out_to_term.m_out;
-        m_aop.m_out_to_term.m_out = nullptr;
+        delete m_channels.m_term.m_out;
+        m_channels.m_term.m_out = nullptr;
 
-        delete m_aop.m_out_to_file.m_fmt;
-        m_aop.m_out_to_file.m_fmt = nullptr;
+        delete m_channels.m_file.m_fmt;
+        m_channels.m_file.m_fmt = nullptr;
 
-        delete m_aop.m_out_to_file.m_out;
-        m_aop.m_out_to_file.m_out = nullptr;
+        delete m_channels.m_file.m_out;
+        m_channels.m_file.m_out = nullptr;
     }
 
     /**
@@ -233,19 +226,19 @@ namespace ruac::rstd::logsystem {
     void Factory::reloadTermConfig(const logtype::strg &term_fmt_mode_, const logtype::boln &enable_ce_,
                                    const logtype::boln &enable_ht_, const logtype::boln &enable_bf_,
                                    const logtype::boln &enable_ot_) {
-        g_term_kmap = logtoken_mapper::tokenmapHT(enable_ce_, enable_ht_, enable_bf_);
+        m_term_kmap = logtoken_mapper::tokenmapHT(enable_ce_, enable_ht_, enable_bf_);
 
         if (enable_ot_) {
-            delete m_aop.m_out_to_term.m_fmt;
-            m_aop.m_out_to_term.m_fmt = createFormat(term_fmt_mode_);
-            if (!m_aop.m_out_to_term.m_out) {
-                m_aop.m_out_to_term.m_out = new OutputConsole();
+            delete m_channels.m_term.m_fmt;
+            m_channels.m_term.m_fmt = createFormat(term_fmt_mode_);
+            if (!m_channels.m_term.m_out) {
+                m_channels.m_term.m_out = new OutputConsole();
             }
         } else {
-            delete m_aop.m_out_to_term.m_fmt;
-            m_aop.m_out_to_term.m_fmt = nullptr;
-            delete m_aop.m_out_to_term.m_out;
-            m_aop.m_out_to_term.m_out = nullptr;
+            delete m_channels.m_term.m_fmt;
+            m_channels.m_term.m_fmt = nullptr;
+            delete m_channels.m_term.m_out;
+            m_channels.m_term.m_out = nullptr;
         }
     }
 
@@ -260,29 +253,29 @@ namespace ruac::rstd::logsystem {
      */
     void Factory::write(const logenum::Level level_, const logtype::strg &message_, const logtype::strg &file_,
                         const logtype::sdit line_) {
-        if (!levelPasses(level_, g_min_level)) {
+        if (!levelPasses(level_, m_min_level)) {
             return;
         }
 
         auto time_str = logtime::safeTimeString26();
         auto level_idx = static_cast<int>(level_);
-        auto seq = g_sequence[level_idx]++;
+        auto seq = m_sequence[level_idx]++;
 
-        if (m_aop.m_out_to_term.m_fmt && m_aop.m_out_to_term.m_out) {
-            if (levelPasses(level_, g_term_level)) {
-                auto level_str = levelToString(level_, g_term_kmap);
-                auto msg = m_aop.m_out_to_term.m_fmt->format(
-                    g_term_kmap, time_str, level_str, seq, message_, file_, line_);
-                m_aop.m_out_to_term.m_out->output(msg);
+        if (m_channels.m_term.m_fmt && m_channels.m_term.m_out) {
+            if (levelPasses(level_, m_term_level)) {
+                auto level_str = levelToString(level_, m_term_kmap);
+                auto msg = m_channels.m_term.m_fmt->format(
+                    m_term_kmap, time_str, level_str, seq, message_, file_, line_);
+                m_channels.m_term.m_out->output(msg);
             }
         }
 
-        if (m_aop.m_out_to_file.m_fmt && m_aop.m_out_to_file.m_out) {
-            if (levelPasses(level_, g_file_level)) {
-                auto level_str = levelToString(level_, g_file_kmap);
-                auto msg = m_aop.m_out_to_file.m_fmt->format(
-                    g_file_kmap, time_str, level_str, seq, message_, file_, line_);
-                m_aop.m_out_to_file.m_out->output(msg);
+        if (m_channels.m_file.m_fmt && m_channels.m_file.m_out) {
+            if (levelPasses(level_, m_file_level)) {
+                auto level_str = levelToString(level_, m_file_kmap);
+                auto msg = m_channels.m_file.m_fmt->format(
+                    m_file_kmap, time_str, level_str, seq, message_, file_, line_);
+                m_channels.m_file.m_out->output(msg);
             }
         }
     }
