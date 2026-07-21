@@ -45,8 +45,8 @@ unset ONCE_RET # delete global variable ONCE_RET
 #    - param1: Optional suffix string to append to the backup filename.
 # Returns: 0 on success, 1 on failure.
 function backup_project() {
-    local backup_src="/home/repox/Engineering/ruacdbv01/ruacdb"
-    local backup_dst="/home/repox/Engineering/ruacdbv01/backup"
+    local backup_src="/home/repox/Engineering/ruac/ruacdb"
+    local backup_dst="/home/repox/Engineering/ruac/backup"
 
     local backup_time
     backup_time="$(date '+%F-%H-%M-%S')"

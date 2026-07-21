@@ -30,7 +30,7 @@ namespace ruac::rstd::logsystem {
         // const logtype::strg G_LOG_DEFAULT_READ_FILE_PATH{"/etc/ruacdb"};
 
         // Test handle.
-        const logtype::strg G_LOG_DEFAULT_READ_FILE_PATH{"/home/repox/Engineering/ruacdbv01/ruacdb/config"};
+        const logtype::strg G_LOG_DEFAULT_READ_FILE_PATH{"/home/repox/Engineering/ruac/ruacdb/config"};
 
 #elif defined(__WIN32__) || defined(__WIN64__)
         const logtype::strg G_LOG_DEFAULT_WRITE_FILE_PATH{"C:\\Users\\RuacDB\\Logs"};
