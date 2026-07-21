@@ -38,6 +38,8 @@ namespace ruac::rstd::logsystem {
      * Factory::reloadTermConfig(), allowing the format style, rendering
      * flags, and output toggle to be changed at runtime.  The file-sink
      * chain and the overall output-mode are never touched by hot reload.
+     *
+     * @param params_  Terminal display parameters for hot reload (optional).
      */
     void Logger::init(const LogParamList &params_) {
         if (!m_factory) {
@@ -55,6 +57,11 @@ namespace ruac::rstd::logsystem {
 
     /**
      * @brief Delegates a log record to the owned Factory.
+     *
+     * @param level_  The log level (DEBUG, INFO, WARNING, ERROR, FATAL).
+     * @param message_  The log message content.
+     * @param file_  The source file name where the log was emitted.
+     * @param line_  The source line number where the log was emitted.
      */
     void Logger::write(const logenum::Level level_, const logtype::strg &message_,
                        const logtype::strg &file_, const logtype::sdit line_) {

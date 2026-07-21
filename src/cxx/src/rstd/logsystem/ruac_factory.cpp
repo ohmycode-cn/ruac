@@ -40,6 +40,10 @@ namespace ruac::rstd::logsystem {
 
         /**
          * @brief Parses a level string into a logenum::Level value.
+         *
+         * @param level_str_  The level string to parse (e.g., "debug", "info").
+         *
+         * @return The corresponding logenum::Level value.
          */
         auto parseLevel(const logtype::strg &level_str_) -> logenum::Level {
             if (level_str_ == logkeys::words::G_LOG_LEVEL_DEBUG)
@@ -59,6 +63,11 @@ namespace ruac::rstd::logsystem {
          * @brief Resolves a logenum::Level value to its rendered string form
          *        via the supplied token map.  Falls back to the raw token key
          *        when the key is absent from the map.
+         *
+         * @param level_  The log level to resolve.
+         * @param kmap_  The keyword-to-literal mapping table.
+         *
+         * @return The rendered string form of the level.
          */
         auto levelToString(const logenum::Level &level_, const logtype::smap &kmap_) -> logtype::strg {
             logtype::strg key;
@@ -88,6 +97,10 @@ namespace ruac::rstd::logsystem {
 
         /**
          * @brief Creates a concrete Format object from a mode string.
+         *
+         * @param mode_  The format mode string ("text", "json", "xml").
+         *
+         * @return A pointer to the newly created Format instance.
          */
         auto createFormat(const logtype::strg &mode_) -> Format * {
             if (mode_ == logkeys::words::G_JSON)
@@ -99,6 +112,11 @@ namespace ruac::rstd::logsystem {
 
         /**
          * @brief Returns true when level_ meets or exceeds filter_ severity.
+         *
+         * @param level_  The log level to check.
+         * @param filter_  The minimum severity filter.
+         *
+         * @return true if level_ >= filter_, false otherwise.
          */
         auto levelPasses(const logenum::Level &level_, const logenum::Level &filter_) -> logtype::boln {
             return static_cast<int>(level_) >= static_cast<int>(filter_);
@@ -106,6 +124,12 @@ namespace ruac::rstd::logsystem {
 
         /**
          * @brief Extracts a string value from confmap with a fallback default.
+         *
+         * @param confmap_  The configuration map to search.
+         * @param key_  The key to look up.
+         * @param default_  The default value if key is not found.
+         *
+         * @return The value from confmap_ or default_ if not found.
          */
         auto confValue(const logtype::smap &confmap_, const logtype::strg &key_,
                        const logtype::strg &default_) -> logtype::strg {
@@ -118,6 +142,8 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Constructs a Factory by parsing confmap_ and allocating the
      *        appropriate Format / Output raw-pointer pairs.
+     *
+     * @param confmap_  The configuration map with log system parameters.
      */
     Factory::Factory(logtype::smap &confmap_) {
         auto output_mode = confValue(confmap_, logkeys::words::G_LOG_OUTPUT_MODE,
@@ -197,6 +223,12 @@ namespace ruac::rstd::logsystem {
      * @brief Hot-reloads terminal configuration: rebuilds the terminal token
      *        map and replaces the terminal Format / Output pointers.  Does
      *        NOT touch the file-sink chain or the output-mode setting.
+     *
+     * @param term_fmt_mode_  The terminal format mode string ("text", "json", "xml").
+     * @param enable_ce_  Enable legacy terminal-compatible mode.
+     * @param enable_ht_  Enable terminal highlight rendering.
+     * @param enable_bf_  Enable bold font output.
+     * @param enable_ot_  Enable terminal log output.
      */
     void Factory::reloadTermConfig(const logtype::strg &term_fmt_mode_, const logtype::boln &enable_ce_,
                                    const logtype::boln &enable_ht_, const logtype::boln &enable_bf_,
@@ -220,6 +252,11 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Formats a log record and dispatches it to the active output
      *        sinks, subject to level filtering.
+     *
+     * @param level_  The log level (DEBUG, INFO, WARNING, ERROR, FATAL).
+     * @param message_  The log message content.
+     * @param file_  The source file name where the log was emitted.
+     * @param line_  The source line number where the log was emitted.
      */
     void Factory::write(const logenum::Level level_, const logtype::strg &message_, const logtype::strg &file_,
                         const logtype::sdit line_) {

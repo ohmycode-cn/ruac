@@ -35,29 +35,31 @@ namespace ruac::rstd::logsystem {
 
             namespace fs = std::filesystem;
             auto fpath = fs::path(fpath_);
+            logtype::strg pfmt{"                Path: "};
+            logtype::strg ffmt{"                File: "};
 
             if (!fs::exists(fpath)) {
                 std::stringstream ss;
-                ss << "[PATH ERROR]: Target path not exists: \n";
-                ss << "              Path: " << fpath;
+                ss << "[PATH ERROR:(]: Target path not exists: \n";
+                ss << pfmt << fpath;
                 std::cout << ss.str() << std::endl;
                 return false;
             }
 
             if (!fs::exists(fpath / fname_)) {
                 std::stringstream ss;
-                ss << "[FILE ERROR]: Target file not exists: \n";
-                ss << "              Path: " << fpath << "\n";
-                ss << "              File: " << fname_;
+                ss << "[FILE ERROR:(]: Target file not exists: \n";
+                ss << pfmt << fpath << "\n";
+                ss << ffmt << fname_;
                 std::cout << ss.str() << std::endl;
                 return false;
             }
 
             if (!fs::is_regular_file(fpath / fname_)) {
                 std::stringstream ss;
-                ss << "[FILE ERROR]: Target file is not regular file ruac not permission handle it: \n";
-                ss << "              Path: " << fpath << "\n";
-                ss << "              File: " << fname_;
+                ss << "[FILE ERROR:(]: Target file is not regular file ruac not permission handle it: \n";
+                ss << pfmt << fpath << "\n";
+                ss << ffmt << fname_;
                 std::cout << ss.str() << std::endl;
                 return false;
             }

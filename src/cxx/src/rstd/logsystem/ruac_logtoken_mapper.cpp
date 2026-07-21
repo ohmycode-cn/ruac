@@ -63,6 +63,12 @@ namespace ruac::rstd::logsystem {
          * @brief Builds a keyword-to-literal mapping table for terminal
          *        rendering, applying color wrapping to each literal token
          *        based on the provided capability flags.
+         *
+         * @param enable_ce_  Enable legacy terminal-compatible mode.
+         * @param enable_ht_  Enable terminal highlight rendering.
+         * @param enable_bf_  Enable bold font output.
+         *
+         * @return A keyword-to-literal mapping table with ANSI color codes.
          */
         auto tokenmapHT(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_,
                         const logtype::boln &enable_bf_) -> logtype::smap {
@@ -109,6 +115,8 @@ namespace ruac::rstd::logsystem {
         /**
          * @brief Builds a keyword-to-literal mapping table for online-style
          *        rendering, mapping each token key to its plain literal.
+         *
+         * @return A keyword-to-literal mapping table without color codes.
          */
         auto tokenmapOL() -> logtype::smap {
 

@@ -25,6 +25,8 @@ namespace ruac::rstd::logsystem {
         /**
          * @brief Returns a hard-coded default configuration map covering all
          *        log system parameters.
+         *
+         * @return A default configuration map with all log system parameters.
          */
         auto retDefaultConfigureMap() -> logtype::smap {
             return {
@@ -50,6 +52,11 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Loads configuration from file via LoadConf; falls back to
      *        retDefaultConfigureMap() when the file yields an empty map.
+     *
+     * @param rfpath_  The directory path containing the configuration file.
+     * @param rfname_  The configuration file name.
+     *
+     * @return A configuration map loaded from file or the default map.
      */
     auto Config::fromFileGetConfigMap(const logtype::strg &rfpath_, const logtype::strg &rfname_) -> logtype::smap {
         if (m_once_lock) {
@@ -67,6 +74,10 @@ namespace ruac::rstd::logsystem {
     /**
      * @brief Resolves optional LogParamOverride values into a concrete
      *        LogParamList, using false/text as per-field defaults.
+     *
+     * @param ov_ops_  Optional override values for terminal display parameters.
+     *
+     * @return A concrete LogParamList with resolved values.
      */
     auto Config::resetTermConfigMap(const LogParamOverride &ov_ops_) -> LogParamList {
 
