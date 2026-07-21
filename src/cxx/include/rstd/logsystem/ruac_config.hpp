@@ -45,6 +45,8 @@ namespace ruac::rstd::logsystem {
      *        and to reset terminal rendering parameters with optional overrides.
      */
     class Config {
+      private:
+        logtype::boln m_once_lock{false};
 
       public:
         Config() = default;

@@ -15,12 +15,15 @@
 #include "rstd/logsystem/ruac_format_json.hpp"
 #include "rstd/logsystem/ruac_format_text.hpp"
 #include "rstd/logsystem/ruac_format_xml.hpp"
+#include "rstd/logsystem/ruac_logger.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
+#include "rstd/logsystem/ruac_logstc.hpp"
 #include "rstd/logsystem/ruac_logtime.hpp"
 #include "rstd/logsystem/ruac_logtoken_mapper.hpp"
 #include "rstd/logsystem/ruac_output_console.hpp"
 #include "rstd/logsystem/ruac_output_file.hpp"
 #include "rstd/logsystem/ruac_logtoken_mapper.hpp"
+#include "rlib/log/ruac_log_runtime.hpp"
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -112,6 +115,24 @@ namespace ruac::test {
         int thread_id{};
         ("thread-1" == thread_name_) ? thread_id = 1 : thread_id = 0;
         innerForeatch(obj, getFormatTextString, thread_id);
+    }
+
+    void testLogRuntime() {
+        ruac::rstd::logsystem::LogParamList plist;
+        plist.m_enable_term_ce = true;
+        plist.m_enable_term_ht = true;
+        plist.m_enable_term_ot = true;
+        plist.m_enable_term_bf = false;
+        plist.m_format_term_sl = "text";
+        ruac::rlib::log::Runtime::obtain().get().init(plist);
+        RUAC_LOG_RUNTIME_DEBUG("This message from level: DEBUG");
+        RUAC_LOG_RUNTIME_INFO("This message from level: INFO");
+        RUAC_LOG_RUNTIME_WARNING("This message from level: WARNING");
+        RUAC_LOG_RUNTIME_ERROR("This message from level: ERROR");
+        RUAC_LOG_RUNTIME_FATAL("This message from level: FATAL");
+        RUAC_LOG_RUNTIME_FATAL("This message from level: FATAL");
+        RUAC_LOG_RUNTIME_FATAL("This message from level: FATAL");
+        RUAC_LOG_RUNTIME_DEBUG("This message from level: DEBUG");
     }
 
 } // namespace ruac::test

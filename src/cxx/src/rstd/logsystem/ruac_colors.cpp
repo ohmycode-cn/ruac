@@ -61,8 +61,8 @@ namespace ruac::rstd::logsystem {
      * @param enable_ht_  Whether to enable terminal highlight rendering.
      * @param enable_bf_  Whether to enable bold font output.
      */
-    void Colors::overloadInit(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_,
-                              const logtype::boln &enable_bf_) {
+    void Colors::reinit(const logtype::boln &enable_ce_, const logtype::boln &enable_ht_,
+                        const logtype::boln &enable_bf_) {
         init(enable_ce_, enable_ht_, enable_bf_);
     }
 

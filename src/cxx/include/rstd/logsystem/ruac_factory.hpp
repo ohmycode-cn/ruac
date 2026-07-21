@@ -7,27 +7,58 @@
  * Source File : src/rstd/logsystem/ruac_factory.cpp
  *
  * File Function Description:
- *
- *
+ *   Declares the Factory class for the RUAC log system. Factory is
+ *   responsible for creating and managing Format and Output polymorphic
+ *   instances based on configuration. Provides methods for writing log
+ *   messages and reloading terminal configuration at runtime.
  */
 
 #pragma once
 #ifndef RUAC_FACTORY_HPP
 #define RUAC_FACTORY_HPP
 
+#include "rstd/logsystem/ruac_logenum.hpp"
+#include "rstd/logsystem/ruac_logtype.hpp"
+#include "rstd/logsystem/ruac_format.hpp"
+#include "rstd/logsystem/ruac_output.hpp"
+
 namespace ruac::rstd::logsystem {
 
+    namespace {
+        struct Pointer {
+            Format *m_fmt{nullptr};
+            Output *m_out{nullptr};
+        };
+
+        struct AggregationOperation {
+            Pointer m_out_to_term;
+            Pointer m_out_to_file;
+        };
+
+    } // namespace
+
     /**
-     * @brief
+     * @brief Factory for creating and managing Format and Output instances.
+     *        Creates terminal and file output sinks with appropriate format
+     *        renderers based on configuration. Supports runtime terminal
+     *        configuration reload.
      */
     class Factory {
-      public:
-        Factory() = default;
-        ~Factory() = default;
+      private:
+        AggregationOperation m_aop;
+        void init();
+        void over();
 
       public:
-        void write();
-        void reinit();
+        Factory(logtype::smap &confmap_);
+        ~Factory();
+
+      public:
+        void write(const logenum::Level level_, const logtype::strg &message_, const logtype::strg &file_,
+                   const logtype::sdit line_);
+        void reloadTermConfig(const logtype::strg &term_fmt_mode_, const logtype::boln &enable_ce_,
+                              const logtype::boln &enable_ht_, const logtype::boln &enable_bf_,
+                              const logtype::boln &enable_ot_);
     }; // class Factory
 
 } // namespace ruac::rstd::logsystem

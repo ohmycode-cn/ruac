@@ -73,9 +73,8 @@ namespace ruac::rstd::logsystem {
         auto w(const logtype::strg &strline_, const logtype::boln &enable_ht_ = true) -> logtype::strg;
 
       public:
-        void overloadInit(const logtype::boln &enable_ce_ = true,
-                          const logtype::boln &enable_ht_ = false,
-                          const logtype::boln &enable_bf_ = false);
+        void reinit(const logtype::boln &enable_ce_ = true, const logtype::boln &enable_ht_ = false,
+                    const logtype::boln &enable_bf_ = false);
     }; // class Colors
 
 } // namespace ruac::rstd::logsystem

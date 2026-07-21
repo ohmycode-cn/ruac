@@ -48,5 +48,6 @@ namespace ruac::test {
         // testOutputConsoleAndThreadSafety();
         // testOutputFileAndThreadSafety();
         testLogfileParser00();
+        testLogRuntime();
     }
 } // namespace ruac::test

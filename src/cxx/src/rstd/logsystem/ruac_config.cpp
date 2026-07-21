@@ -52,6 +52,10 @@ namespace ruac::rstd::logsystem {
      *        retDefaultConfigureMap() when the file yields an empty map.
      */
     auto Config::fromFileGetConfigMap(const logtype::strg &rfpath_, const logtype::strg &rfname_) -> logtype::smap {
+        if (m_once_lock) {
+            return {};
+        }
+        m_once_lock = true;
         LoadConf lc(rfpath_, rfname_);
         auto map = lc.getConfigMap();
         if (!map.empty()) {

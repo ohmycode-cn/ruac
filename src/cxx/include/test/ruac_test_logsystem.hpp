@@ -24,6 +24,7 @@ namespace ruac::test {
     void testFormatXML();
     void testOutputConsole(const std::string &thread_name_ = "");
     void testOutputFile(const std::string &thread_name_ = "");
+    void testLogRuntime();
 } // namespace ruac::test
 
 #endif // RUAC_TEST_LOGSYSTEM_HPP
