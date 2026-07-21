@@ -23,45 +23,55 @@ namespace ruac::rstd::logsystem {
     namespace {
 
         /**
-         * @brief Validates the target file path and file existence and type.
+         * @brief Validates the target directory and file for write access.
+         *
+         * If the directory does not exist, attempts to create it.  If the
+         * file already exists, verifies it is a regular file.  A missing
+         * file is not an error — the caller will create it on open.
          *
          * @param fpath_  The directory path where the log file should reside.
          * @param fname_  The log file name to validate.
          *
-         * @return true if the path exists, the file exists, and it is a regular file;
-         *         false otherwise with diagnostic output to stdout.
+         * @return true when the directory is writable (and, if the file
+         *         exists, it is a regular file); false on hard errors.
          */
         auto checkfile(const logtype::strg &fpath_, const logtype::strg &fname_) -> logtype::boln {
 
             namespace fs = std::filesystem;
             auto fpath = fs::path(fpath_);
-            logtype::strg pfmt{"                Path: "};
-            logtype::strg ffmt{"                File: "};
+            auto full  = fpath / fname_;
+            logtype::strg pfmt{"               Path: "};
+            logtype::strg ffmt{"               File: "};
 
             if (!fs::exists(fpath)) {
+                fs::create_directories(fpath);
+                if (!fs::exists(fpath)) {
+                    std::stringstream ss;
+                    ss << "[PATH ERROR:(] Failed to create directory: \n";
+                    ss << pfmt << fpath;
+                    std::cout << ss.str() << std::endl;
+                    return false;
+                }
+            }
+
+            auto perms = fs::status(fpath).permissions();
+            if ((perms & fs::perms::owner_write) == fs::perms::none) {
                 std::stringstream ss;
-                ss << "[PATH ERROR:(]: Target path not exists: \n";
+                ss << "[PATH ERROR:(] Directory is not writable: \n";
                 ss << pfmt << fpath;
                 std::cout << ss.str() << std::endl;
                 return false;
             }
 
-            if (!fs::exists(fpath / fname_)) {
-                std::stringstream ss;
-                ss << "[FILE ERROR:(]: Target file not exists: \n";
-                ss << pfmt << fpath << "\n";
-                ss << ffmt << fname_;
-                std::cout << ss.str() << std::endl;
-                return false;
-            }
-
-            if (!fs::is_regular_file(fpath / fname_)) {
-                std::stringstream ss;
-                ss << "[FILE ERROR:(]: Target file is not regular file ruac not permission handle it: \n";
-                ss << pfmt << fpath << "\n";
-                ss << ffmt << fname_;
-                std::cout << ss.str() << std::endl;
-                return false;
+            if (fs::exists(full)) {
+                if (!fs::is_regular_file(full)) {
+                    std::stringstream ss;
+                    ss << "[FILE ERROR:(] Target is not a regular file: \n";
+                    ss << pfmt << fpath << "\n";
+                    ss << ffmt << fname_;
+                    std::cout << ss.str() << std::endl;
+                    return false;
+                }
             }
 
             return true;
