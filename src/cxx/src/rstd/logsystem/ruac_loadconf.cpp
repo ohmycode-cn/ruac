@@ -1,18 +1,20 @@
 /**
  * C/C++ Style Guide: RUAC-CCXX-STYLE-GUIDE.md
  * Line Limit: Recommend line breaks at col: 96, force line breaks at col: 120
- * Date Time: 2026-07-19 22:03:42
+ * Date Time: 2026-07-21 20:06:18
  * Author: ohmycode-cn(ohcode@163.com)
  * Header File : include/rstd/logsystem/ruac_loadconf.hpp
  * Source File : src/rstd/logsystem/ruac_loadconf.cpp
  *
  * File Function Description:
- *   Provides three anonymous-namespace helpers: outStringStream() for
- *   diagnostic output, loadFileBuffer() for validated file loading into
- *   a byte buffer, and parserConfigFile() for extracting key-value pairs
- *   from configuration content with comment and quote handling.
+ *   Provides three anonymous-namespace helpers: emitLoadMessage() for
+ *   unified diagnostic output with severity control, loadFileBuffer()
+ *   for validated file loading into a byte buffer, and
+ *   parserConfigFile() for extracting key-value pairs from
+ *   configuration content with comment and quote handling.
  */
 
+#include "rstd/logsystem/ruac_message_entrust.hpp"
 #include "rstd/logsystem/ruac_loadconf.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
@@ -21,22 +23,33 @@
 #include <fstream>
 #include <cstddef>
 #include <sstream>
+#include <string_view>
 
 namespace ruac::rstd::logsystem {
 
     namespace {
 
-        /**
-         * @brief Outputs the contents of a stringstream to stdout.
-         *
-         * @param ss_  The stringstream whose contents to output.
-         * @param enable_load_msg_  If false, suppresses output (default: true).
-         */
-        void outStringStream(std::stringstream &ss_, const logtype::boln &enable_load_msg_ = true) {
-            if (!enable_load_msg_) {
+        constexpr std::string_view G_FORMAT_PLACEHOLDER{"                        "}; // 24 spaces
+        constexpr std::string_view G_LOAD_CONFIG{"LOAD CONFIG "};
+
+        void emitLoadMessage(const logtype::boln &enable_, bool is_error, std::string_view detail_,
+                             std::string_view default_hint_) {
+
+            if (!enable_) {
                 return;
             }
-            std::cout << ss_.str() << std::endl;
+
+            std::stringstream ss;
+            ss << detail_ << "\n"
+               << G_FORMAT_PLACEHOLDER << default_hint_;
+
+            MessageEntrustParam param{std::string(G_LOAD_CONFIG), ss.str()};
+
+            if (is_error) {
+                MessageEntrust::instance().stdoutError(param);
+            } else {
+                MessageEntrust::instance().stdoutWarning(param);
+            }
         }
 
         /**
@@ -52,36 +65,35 @@ namespace ruac::rstd::logsystem {
         auto loadFileBuffer(std::vector<std::byte> &file_buffer_, std::filesystem::path &full_path_,
                             const logtype::boln &enable_load_msg_) -> logtype::boln {
 
-            logtype::strg default_line{"               Will use default inner parameter configuration !"};
-            std::stringstream ss;
+            constexpr std::string_view kDefaultHint = "Will use default inner parameter configuration !";
 
             if (!std::filesystem::exists(full_path_)) {
-                ss << "[LOAD ERROR:(] Not found file: " << full_path_.string() << "\n"
-                   << default_line;
-                outStringStream(ss, enable_load_msg_);
+                std::stringstream ss;
+                ss << "Not found file: " << full_path_.string();
+                emitLoadMessage(enable_load_msg_, false, ss.str(), kDefaultHint);
                 return false;
             }
 
             if (!std::filesystem::is_regular_file(full_path_)) {
-                ss << "[LOAD ERROR:(] Not a regular file: " << full_path_.string() << "\n"
-                   << default_line;
-                outStringStream(ss, enable_load_msg_);
+                std::stringstream ss;
+                ss << "Not a regular file: " << full_path_.string();
+                emitLoadMessage(enable_load_msg_, true, ss.str(), kDefaultHint);
                 return false;
             }
 
             std::ifstream file(full_path_, std::ios::binary | std::ios::ate);
             if (!file) {
-                ss << "[LOAD ERROR:(] Failed to open file: " << full_path_.string() << "\n"
-                   << default_line;
-                outStringStream(ss, enable_load_msg_);
+                std::stringstream ss;
+                ss << "Failed to open file: " << full_path_.string();
+                emitLoadMessage(enable_load_msg_, true, ss.str(), kDefaultHint);
                 return false;
             }
 
             const std::streamsize file_size = file.tellg();
             if (file_size <= 0) {
-                ss << "[LOAD ERROR:(] Configuration file is empty: " << full_path_.string() << "\n"
-                   << default_line;
-                outStringStream(ss, enable_load_msg_);
+                std::stringstream ss;
+                ss << "Configuration file is empty: " << full_path_.string();
+                emitLoadMessage(enable_load_msg_, true, ss.str(), kDefaultHint);
                 return false;
             }
 
@@ -151,7 +163,8 @@ namespace ruac::rstd::logsystem {
      * @param rfname_  The configuration file name.
      * @param enable_load_msg_  If false, suppresses load diagnostic messages.
      */
-    LoadConf::LoadConf(const logtype::strg &rfpath_, const logtype::strg &rfname_,
+    LoadConf::LoadConf(const logtype::strg &rfpath_,
+                       const logtype::strg &rfname_,
                        const logtype::boln &enable_load_msg_) {
         m_enable_load_msg = enable_load_msg_;
         init(rfpath_, rfname_);
@@ -170,18 +183,20 @@ namespace ruac::rstd::logsystem {
 
         if (rfpath_.empty()) {
             std::stringstream ss;
-            ss << "[LOAD WARNING] Invalid configuration file path: " << rfpath_ << "\n"
-               << "               Use default file path: " << pathconf::G_LOG_DEFAULT_READ_FILE_PATH;
-            outStringStream(ss, m_enable_load_msg);
+            ss << "Invalid configuration file path: " << rfpath_;
+            std::stringstream hint;
+            hint << "Use default file path: " << pathconf::G_LOG_DEFAULT_READ_FILE_PATH;
+            emitLoadMessage(m_enable_load_msg, false, ss.str(), hint.str());
         } else {
             m_rfpath = rfpath_;
         }
 
         if (rfname_.empty()) {
             std::stringstream ss;
-            ss << "[LOAD WARNING] Invalid configuration file name: " << rfname_ << "\n"
-               << "               Use default file name: " << pathconf::G_LOG_DEFAULT_READ_FILE_NAME;
-            outStringStream(ss, m_enable_load_msg);
+            ss << "Invalid configuration file name: " << rfname_;
+            std::stringstream hint;
+            hint << "Use default file name: " << pathconf::G_LOG_DEFAULT_READ_FILE_NAME;
+            emitLoadMessage(m_enable_load_msg, false, ss.str(), hint.str());
         } else {
             m_rfname = rfname_;
         }

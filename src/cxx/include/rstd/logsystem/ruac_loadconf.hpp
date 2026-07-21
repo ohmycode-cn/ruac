@@ -48,7 +48,8 @@ namespace ruac::rstd::logsystem {
         void init(const logtype::strg &rfpath_, const logtype::strg &rfname_);
 
       public:
-        LoadConf(const logtype::strg &rfpath_ = "", const logtype::strg &rfname_ = "",
+        LoadConf(const logtype::strg &rfpath_ = "",
+                 const logtype::strg &rfname_ = "",
                  const logtype::boln &enable_load_msg_ = true);
         ~LoadConf() = default;
 

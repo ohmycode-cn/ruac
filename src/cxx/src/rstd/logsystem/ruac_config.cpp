@@ -12,6 +12,7 @@
  *   parameters as the fallback when file loading yields an empty map.
  */
 
+#include "rstd/logsystem/ruac_pathconf.hpp"
 #include "rstd/logsystem/ruac_loadconf.hpp"
 #include "rstd/logsystem/ruac_logkeys.hpp"
 #include "rstd/logsystem/ruac_logstc.hpp"
@@ -40,9 +41,8 @@ namespace ruac::rstd::logsystem {
                 {logkeys::words::G_LOG_TERM_FORMAT_MODE, logkeys::words::G_TEXT},
                 {logkeys::words::G_LOG_FILE_FORMAT_MODE, logkeys::words::G_TEXT},
                 {logkeys::words::G_LOG_OUTPUT_MODE, logkeys::words::G_CONSOLE},
-                // This is temporary test path and file name.
-                {logkeys::words::G_LOG_WRITE_PATH, "/home/repox/Engineering/ruacdbv01/ruacdb/tmp"},
-                {logkeys::words::G_LOG_WRITE_FILE, "ruacdb.test.log"},
+                {logkeys::words::G_LOG_WRITE_PATH, pathconf::G_LOG_DEFAULT_WRITE_FILE_PATH},
+                {logkeys::words::G_LOG_WRITE_FILE, pathconf::G_LOG_DEFAULT_WRITE_FILE_NAME},
                 {logkeys::words::G_LOG_FILE_SIZE_LIMIT, "128MB"},
             };
         }

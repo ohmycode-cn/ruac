@@ -11,6 +11,7 @@
  *
  */
 
+#include "rstd/logsystem/ruac_message_entrust.hpp"
 #include "test/ruac_test_logfile_parser.hpp"
 #include "test/ruac_test_main.hpp"
 #include "test/ruac_test_logsystem.hpp"
@@ -42,6 +43,7 @@ namespace ruac::test {
 
     } // namespace
     void testMain() {
+        ruac::rstd::logsystem::MessageEntrust::instance().init(true, true, false);
         // foreatch(&testFormatJson);
         // foreatch(&testFormatText);
         // foreatch(&testFormatXML);

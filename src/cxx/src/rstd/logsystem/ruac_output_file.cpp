@@ -12,10 +12,10 @@
  *   type before opening.
  */
 
+#include "rstd/logsystem/ruac_message_entrust.hpp"
 #include "rstd/logsystem/ruac_output_file.hpp"
 #include "rstd/logsystem/ruac_logtype.hpp"
 #include <filesystem>
-#include <iostream>
 #include <sstream>
 
 namespace ruac::rstd::logsystem {
@@ -39,7 +39,7 @@ namespace ruac::rstd::logsystem {
 
             namespace fs = std::filesystem;
             auto fpath = fs::path(fpath_);
-            auto full  = fpath / fname_;
+            auto full = fpath / fname_;
             logtype::strg pfmt{"               Path: "};
             logtype::strg ffmt{"               File: "};
 
@@ -47,9 +47,9 @@ namespace ruac::rstd::logsystem {
                 fs::create_directories(fpath);
                 if (!fs::exists(fpath)) {
                     std::stringstream ss;
-                    ss << "[PATH ERROR:(] Failed to create directory: \n";
+                    ss << "Failed to create directory: \n";
                     ss << pfmt << fpath;
-                    std::cout << ss.str() << std::endl;
+                    MessageEntrust::instance().stdoutError({"PATH ", ss.str()});
                     return false;
                 }
             }
@@ -57,19 +57,19 @@ namespace ruac::rstd::logsystem {
             auto perms = fs::status(fpath).permissions();
             if ((perms & fs::perms::owner_write) == fs::perms::none) {
                 std::stringstream ss;
-                ss << "[PATH ERROR:(] Directory is not writable: \n";
+                ss << "Directory is not writable: \n";
                 ss << pfmt << fpath;
-                std::cout << ss.str() << std::endl;
+                MessageEntrust::instance().stdoutError({"PATH ", ss.str()});
                 return false;
             }
 
             if (fs::exists(full)) {
                 if (!fs::is_regular_file(full)) {
                     std::stringstream ss;
-                    ss << "[FILE ERROR:(] Target is not a regular file: \n";
+                    ss << "Target is not a regular file: \n";
                     ss << pfmt << fpath << "\n";
                     ss << ffmt << fname_;
-                    std::cout << ss.str() << std::endl;
+                    MessageEntrust::instance().stdoutError({"FILE ", ss.str()});
                     return false;
                 }
             }

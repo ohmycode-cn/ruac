@@ -24,38 +24,38 @@ namespace ruac::rstd::logsystem {
 
         namespace {
 
-            const logtype::strg G_TOKEN_L_BRACE{"{"};
-            const logtype::strg G_TOKEN_R_BRACE{"}"};
-            const logtype::strg G_TOKEN_L_SQUARE_BRACKET{"["};
-            const logtype::strg G_TOKEN_R_SQUARE_BRACKET{"]"};
-            const logtype::strg G_TOKEN_L_PARENTHESIS{"("};
-            const logtype::strg G_TOKEN_R_PARENTHESIS{")"};
-            const logtype::strg G_TOKEN_SEQUENCE{"SEQUENCE"};
-            const logtype::strg G_TOKEN_TIME{"TIME"};
-            const logtype::strg G_TOKEN_LEVEL{"LEVEL"};
-            const logtype::strg G_TOKEN_MESSAGE{"MESSAGE"};
-            const logtype::strg G_TOKEN_FILE{"FILE"};
-            const logtype::strg G_TOKEN_LINE{"LINE"};
-            const logtype::strg G_TOKEN_COLON{":"};
-            const logtype::strg G_TOKEN_COMMA{","};
-            const logtype::strg G_TOKEN_EQUAL{"="};
-            const logtype::strg G_TOKEN_QUOTE{"\""};
-            const logtype::strg G_TOKEN_GT{">"};
-            const logtype::strg G_TOKEN_SLASH{"/"};
-            const logtype::strg G_TOKEN_LT{"<"};
-            const logtype::strg G_TOKEN_QUESTION{"?"};
-            const logtype::strg G_TOKEN_DEBUG{"DEBUG"};
-            const logtype::strg G_TOKEN_INFO{"INFO"};
-            const logtype::strg G_TOKEN_WARNING{"WARNING"};
-            const logtype::strg G_TOKEN_ERROR{"ERROR"};
-            const logtype::strg G_TOKEN_FATAL{"FATAL"};
-            const logtype::strg G_TOKEN_XML_RECORD{"record"};
-            const logtype::strg G_TOKEN_XML_TIME{"time"};
-            const logtype::strg G_TOKEN_XML_LEVEL{"level"};
-            const logtype::strg G_TOKEN_XML_MESSAGE{"message"};
-            const logtype::strg G_TOKEN_XML_SEQUENCE{"sequence"};
-            const logtype::strg G_TOKEN_XML_FILE{"file"};
-            const logtype::strg G_TOKEN_XML_LINE{"line"};
+            constexpr const char *G_TOKEN_L_BRACE{"{"};
+            constexpr const char *G_TOKEN_R_BRACE{"}"};
+            constexpr const char *G_TOKEN_L_SQUARE_BRACKET{"["};
+            constexpr const char *G_TOKEN_R_SQUARE_BRACKET{"]"};
+            constexpr const char *G_TOKEN_L_PARENTHESIS{"("};
+            constexpr const char *G_TOKEN_R_PARENTHESIS{")"};
+            constexpr const char *G_TOKEN_SEQUENCE{"SEQUENCE"};
+            constexpr const char *G_TOKEN_TIME{"TIME"};
+            constexpr const char *G_TOKEN_LEVEL{"LEVEL"};
+            constexpr const char *G_TOKEN_MESSAGE{"MESSAGE"};
+            constexpr const char *G_TOKEN_FILE{"FILE"};
+            constexpr const char *G_TOKEN_LINE{"LINE"};
+            constexpr const char *G_TOKEN_COLON{":"};
+            constexpr const char *G_TOKEN_COMMA{","};
+            constexpr const char *G_TOKEN_EQUAL{"="};
+            constexpr const char *G_TOKEN_QUOTE{"\""};
+            constexpr const char *G_TOKEN_GT{">"};
+            constexpr const char *G_TOKEN_SLASH{"/"};
+            constexpr const char *G_TOKEN_LT{"<"};
+            constexpr const char *G_TOKEN_QUESTION{"?"};
+            constexpr const char *G_TOKEN_DEBUG{"DEBUG"};
+            constexpr const char *G_TOKEN_INFO{"INFO"};
+            constexpr const char *G_TOKEN_WARNING{"WARNING"};
+            constexpr const char *G_TOKEN_ERROR{"ERROR"};
+            constexpr const char *G_TOKEN_FATAL{"FATAL"};
+            constexpr const char *G_TOKEN_XML_RECORD{"record"};
+            constexpr const char *G_TOKEN_XML_TIME{"time"};
+            constexpr const char *G_TOKEN_XML_LEVEL{"level"};
+            constexpr const char *G_TOKEN_XML_MESSAGE{"message"};
+            constexpr const char *G_TOKEN_XML_SEQUENCE{"sequence"};
+            constexpr const char *G_TOKEN_XML_FILE{"file"};
+            constexpr const char *G_TOKEN_XML_LINE{"line"};
 
         } // namespace
 
@@ -126,6 +126,7 @@ namespace ruac::rstd::logsystem {
                 {logkeys::tokens::G_LEFT_SQUARE_BRACKET, G_TOKEN_L_SQUARE_BRACKET},
                 {logkeys::tokens::G_RIGHT_SQUARE_BRACKET, G_TOKEN_R_SQUARE_BRACKET},
                 {logkeys::tokens::G_LEFT_PARENTHESIS, G_TOKEN_L_PARENTHESIS},
+                {logkeys::tokens::G_RIGHT_PARENTHESIS, G_TOKEN_R_PARENTHESIS},
                 {logkeys::tokens::G_SEQUENCE, G_TOKEN_SEQUENCE},
                 {logkeys::tokens::G_TIME, G_TOKEN_TIME},
                 {logkeys::tokens::G_LEVEL, G_TOKEN_LEVEL},

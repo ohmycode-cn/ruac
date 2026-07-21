@@ -21,7 +21,7 @@ namespace ruac::test {
 
         // std::string fpath{"/home/repox/Engineering/ruacdbv01/ruacdb/test"}; // test not exist directory
 
-        std::string fpath{"/home/repox/Engineering/ruacdbv01/ruacdb/config"};
+        std::string fpath{"/home/repox/Engineering/ruac/ruacdb/config"};
         std::string fname{"ruacdb.log.conf"};
 
         auto loadconf = new ruac::rstd::logsystem::LoadConf(fpath, fname);
